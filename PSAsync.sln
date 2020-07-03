@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSAsync.Tests", "PSAsync.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSAsync.Analyzer", "PSAsync.Analyzer\PSAsync.Analyzer.csproj", "{ACCAC3A6-3AC0-4FA3-AA6E-8A99BC4F9478}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSAsync.Analyzer.Test", "PSAsync.Analyzer.Test\PSAsync.Analyzer.Test.csproj", "{1715C6B2-F2CF-4649-AD88-698F82FEC103}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSAsync.Analyzer.Tests", "PSAsync.Analyzer.Tests\PSAsync.Analyzer.Tests.csproj", "{1715C6B2-F2CF-4649-AD88-698F82FEC103}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

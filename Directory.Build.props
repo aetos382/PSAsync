@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Project>
 
+  <PropertyGroup>
+    <PackageVersion>0.1.0</PackageVersion>
+    <Authors>aetos</Authors>
+    <Company>Lukewarm Software</Company>
+    <Copyright>Copyright (c) 2020 aetos</Copyright>
+    <PackageProjectUrl>https://github.com/aetos382/PSAsync/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/aetos382/PSAsync/</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>PowerShell</PackageTags>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+
 </Project>
