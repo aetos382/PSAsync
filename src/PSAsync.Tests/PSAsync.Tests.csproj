@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PSAsync\PSAsync.csproj" />
+  </ItemGroup>
+
 </Project>
