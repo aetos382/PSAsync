@@ -16,7 +16,7 @@ namespace PSAsync.Samples
 
         protected override void ProcessRecord()
         {
-            this.DoBeginProcessingAsync();
+            this.DoProcessRecordAsync();
         }
 
         protected override void EndProcessing()
