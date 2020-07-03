@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PSAsync\PSAsync.csproj" />
+  </ItemGroup>
+
 </Project>

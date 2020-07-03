@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.csproj": "xml",
+    "*.targets": "xml",
+    "*.props": "xml"
+  }
+}
