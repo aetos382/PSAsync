@@ -30,6 +30,7 @@ namespace PSAsync.Samples
 
         protected async Task BeginProcessingAsync()
         {
+            await Task.Delay(1000);
         }
 
         #endregion
