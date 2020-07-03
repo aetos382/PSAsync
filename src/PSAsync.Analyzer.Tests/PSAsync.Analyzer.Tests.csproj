@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <RestoreAdditionalProjectSources>
       https://dotnet.myget.org/F/roslyn-analyzers/api/v3/index.json;
