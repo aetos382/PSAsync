@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="../Common/*.cs" />
+    <Compile Include="..\Common\*.cs" />
   </ItemGroup>
 
 </Project>
