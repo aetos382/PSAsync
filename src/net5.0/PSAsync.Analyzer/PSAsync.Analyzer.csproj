@@ -27,6 +27,8 @@
 
       そのため、StronglyTypedXxx プロパティを設定して、resgen にコードを生成させるが、こうすると、生成された Resources.Designer.cs が、自動的に Compile に含まれてしまう。
       そこで、重複しているという警告を出さないために、あらかじめ Remove しておく。
+
+      Resources.Designer.cs はビルド時に自動生成される（デザイナで事前生成ではない）ため、.gitignore でコード管理対象から除外している。
     -->
     <Compile Remove="Resources.Designer.cs" />
 
