@@ -13,4 +13,9 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <RepositoryRootDirectory>$(MSBuildThisFileDirectory)..</RepositoryRootDirectory>
+    <CommonSourceDirectory>$(MSBuildThisFileDirectory)\Common</CommonSourceDirectory>
+  </PropertyGroup>
+
 </Project>

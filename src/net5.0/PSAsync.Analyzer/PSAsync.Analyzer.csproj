@@ -15,19 +15,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-    <EmbeddedResource Update="Resources.resx">
+    <Compile Include="$(ProjectSourceDirectory)\**\*.cs" Exclude="$(ProjectSourceDirectory)\Resources.Designer.cs" />
+    <Compile Include="$(CommonSourceDirectory)\*.cs" />
+
+    <Compile Remove="Resources.Designer.cs" />
+
+    <EmbeddedResource Include="$(ProjectSourceDirectory)\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <StronglyTypedClassName>Resources</StronglyTypedClassName>
+      <StronglyTypedFileName>Resources.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>cs</StronglyTypedLanguage>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
+    <None Update="$(ProjectSourceDirectory)\tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/global",
+
+  "sdk": {
+    "version": "5.0",
+    "allowPrerelease": true,
+    "rollForward": "major"
+  }
+}

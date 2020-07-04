@@ -2,7 +2,7 @@
 <Project>
 
   <ItemGroup>
-    <PackageReference Update="Microsoft.PowerShell.SDK" Version="7.0.2">
+    <PackageReference Update="Microsoft.PowerShell.SDK" Version="7.1.0-preview.3">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
@@ -19,10 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)LICENSE.txt">
+    <None Include="$(RepositoryRootDirectory)\LICENSE.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="$(ProjectSourceDirectory)\obj\**\*.cs"/>
   </ItemGroup>
 
 </Project>
