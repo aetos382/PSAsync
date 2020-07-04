@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Analyzer Include="$(MSBuildThisFileDirectory)..\PSAsync.Analyzer\$(Configuration)\netstandard2.0\PSAsync.Analyzer.dll" />
+    <Analyzer Include="$(MSBuildThisFileDirectory)..\PSAsync.Analyzer\bin\$(Configuration)\netstandard2.0\PSAsync.Analyzer.dll" />
   </ItemGroup>
 
 </Project>
