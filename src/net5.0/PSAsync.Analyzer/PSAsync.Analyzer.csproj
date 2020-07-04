@@ -18,11 +18,19 @@
     <Compile Include="$(ProjectSourceDirectory)\**\*.cs" Exclude="$(ProjectSourceDirectory)\Resources.Designer.cs" />
     <Compile Include="$(CommonSourceDirectory)\*.cs" />
 
+    <!--
+      $(ProjectSourceDirectory)\Resources.resx を普通に追加しても、ResXFileCodeGenerator でコードが生成されない。
+      https://github.com/dotnet/project-system/issues/6171
+
+      また、自動生成系は SDK のバージョンによって生成結果が変わることが想定されるため、$(ProjectSourceDirectory)\Resources.Designer.cs をそのまま使いたくない。
+      net5.0 では独自にコードを生成し、かつ、それが $(ProjectSourceDirectory)\Resources.Designer.cs を上書きしないようにしたい。
+
+      そのため、StronglyTypedXxx プロパティを設定して、resgen にコードを生成させるが、こうすると、生成された Resources.Designer.cs が、自動的に Compile に含まれてしまう。
+      そこで、重複しているという警告を出さないために、あらかじめ Remove しておく。
+    -->
     <Compile Remove="Resources.Designer.cs" />
 
     <EmbeddedResource Include="$(ProjectSourceDirectory)\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
       <StronglyTypedClassName>Resources</StronglyTypedClassName>
       <StronglyTypedFileName>Resources.Designer.cs</StronglyTypedFileName>
       <StronglyTypedLanguage>cs</StronglyTypedLanguage>
