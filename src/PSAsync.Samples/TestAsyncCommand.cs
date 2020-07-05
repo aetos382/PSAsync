@@ -1,8 +1,11 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PSAsync.Samples
 {
+    [Cmdlet(VerbsDiagnostic.Test, "AsyncCommand")]
     public class TestAsyncCommand :
         Cmdlet,
         IAsyncCmdlet
@@ -11,26 +14,57 @@ namespace PSAsync.Samples
 
         protected override void BeginProcessing()
         {
-            this.DoBeginProcessingAsync();
+            // this.DoBeginProcessingAsync();
         }
 
         protected override void ProcessRecord()
         {
-            this.DoProcessRecordAsync();
+            try
+            {
+                this.DoProcessRecordAsync();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         protected override void EndProcessing()
         {
-            this.DoEndProcessingAsync();
+            // this.DoEndProcessingAsync();
+        }
+
+        protected override void StopProcessing()
+        {
+            this.CancelAsyncOperation();
         }
 
         #endregion
 
         #region async methods
 
-        protected async Task BeginProcessingAsync()
+        public async Task ProcessRecordAsync(
+            CancellationToken cancellationToken)
         {
-            await Task.Delay(1000);
+            try
+            {
+                await Task.Yield();
+
+                await this
+                    .WriteObjectAsync(1, false, cancellationToken);
+
+                await Task.Delay(TimeSpan.FromSeconds(10), cancellationToken);
+
+                await this.WriteObjectAsync(2, false, cancellationToken);
+
+                await Task.Yield();
+
+                await this.WriteObjectAsync(3, false, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         #endregion

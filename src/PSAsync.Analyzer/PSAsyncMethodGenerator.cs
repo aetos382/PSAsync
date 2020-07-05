@@ -1,4 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Text;
+
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
 
 namespace PSAsync.Analyzer
 {
@@ -14,6 +17,7 @@ namespace PSAsync.Analyzer
         public void Execute(
             SourceGeneratorContext context)
         {
+            context.AddSource("Foo.cs", SourceText.From("internal class Foo {}", Encoding.UTF8));
         }
     }
 }

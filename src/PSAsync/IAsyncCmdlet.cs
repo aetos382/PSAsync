@@ -1,20 +1,24 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace PSAsync
 {
     public interface IAsyncCmdlet
     {
-        protected Task BeginProcessingAsync()
+        Task BeginProcessingAsync(
+            CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
 
-        protected Task ProcessRecordAsync()
+        Task ProcessRecordAsync(
+            CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
 
-        protected Task EndProcessingAsync()
+        Task EndProcessingAsync(
+            CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

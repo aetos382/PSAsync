@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,9 +12,18 @@
     <PackageReference Include="Microsoft.PowerShell.SDK" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <PackageReference Include="System.Reactive" Version="4.4.1">
+      <PrivaeAssets>all</PrivaeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" Version="3.1.5">
+      <PrivaeAssets>all</PrivaeAssets>
+    </PackageReference>
+  </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\PSAsync.Analyzer\PSAsync.Analyzer.csproj" />
     <ProjectReference Include="..\PSAsync\PSAsync.csproj" />
+    <ProjectReference Include="..\PSAsync.Analyzer\PSAsync.Analyzer.csproj" />
   </ItemGroup>
 
 </Project>
