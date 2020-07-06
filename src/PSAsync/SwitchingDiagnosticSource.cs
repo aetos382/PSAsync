@@ -10,20 +10,11 @@ namespace PSAsync
         public SwitchingDiagnosticSource(
             string sourceName,
             string switchName)
-            : this(
-                new DiagnosticListener(sourceName),
-                switchName)
         {
-        }
-
-        public SwitchingDiagnosticSource(
-            DiagnosticSource internalSource,
-            string switchName)
-        {
-            Requires.ArgumentNotNull(internalSource, nameof(internalSource));
+            Requires.ArgumentNotNull(sourceName, nameof(sourceName));
             Requires.ArgumentNotNull(switchName, nameof(switchName));
 
-            this._internalSource = internalSource;
+            this._internalSource = new DiagnosticListener(sourceName);
             this._switchName = switchName;
         }
 
