@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading;
 
 namespace PSAsync
@@ -28,26 +27,6 @@ namespace PSAsync
             this._diagnosticSource.Write(
                 DiagnosticConstants.Post,
                 Unit.Instance);
-        }
-
-        public override SynchronizationContext CreateCopy()
-        {
-            return base.CreateCopy();
-        }
-
-        public override void OperationCompleted()
-        {
-            base.OperationCompleted();
-        }
-
-        public override void OperationStarted()
-        {
-            base.OperationStarted();
-        }
-
-        public override void Send(SendOrPostCallback d, object? state)
-        {
-            base.Send(d, state);
         }
 
         private class Callback :
