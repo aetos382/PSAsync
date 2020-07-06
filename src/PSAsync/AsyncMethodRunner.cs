@@ -15,10 +15,6 @@ namespace PSAsync
             public const string TraceSwitchName = SourceName + ".TraceEnabled";
 
             public const string AsyncActionActivity = "AsyncAction";
-
-            public const string OperationCancelled = "OperationCancelled";
-
-            public const string Exception = "Exception";
         }
 
         public static void DoAsyncOperation<TCmdlet>(
@@ -60,33 +56,11 @@ namespace PSAsync
                         diagnosticSource.StartActivity(activity, Unit.Instance);
                     }
 
-                    try
-                    {
-                        action.Invoke();
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        diagnosticSource.Write(
-                            DiagnosticConstants.OperationCancelled,
-                            Unit.Instance);
-                    }
-                    catch (Exception ex)
-                    {
-                        diagnosticSource.Write(
-                            DiagnosticConstants.Exception,
-                                new {
-                                    Exception = ex
-                                });
+                    action.Invoke();
 
-                        context.CancelAsyncOperations();
-                        throw;
-                    }
-                    finally
+                    if (traceEnabled)
                     {
-                        if (traceEnabled)
-                        {
-                            diagnosticSource.StopActivity(activity!, Unit.Instance);
-                        }
+                        diagnosticSource.StopActivity(activity!, Unit.Instance);
                     }
                 }
             }
@@ -96,9 +70,8 @@ namespace PSAsync
                 {
                     task.GetAwaiter().GetResult();
                 }
-                catch (Exception e)
+                catch (OperationCanceledException)
                 {
-                    throw;
                 }
             }
         }
