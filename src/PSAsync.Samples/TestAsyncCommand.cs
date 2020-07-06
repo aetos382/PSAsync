@@ -34,30 +34,12 @@ namespace PSAsync.Samples
 
         #endregion
 
-        #region async methods
+        #region async pipeline methods
 
         public async Task ProcessRecordAsync(
             CancellationToken cancellationToken)
         {
-            try
-            {
-                await Task.Yield();
-
-                await this
-                    .WriteObjectAsync(1, false, cancellationToken);
-
-                await Task.Delay(TimeSpan.FromSeconds(10), cancellationToken);
-
-                await this.WriteObjectAsync(2, false, cancellationToken);
-
-                await Task.Yield();
-
-                await this.WriteObjectAsync(3, false, cancellationToken);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            await Task.Delay(TimeSpan.FromSeconds(10));
         }
 
         #endregion
