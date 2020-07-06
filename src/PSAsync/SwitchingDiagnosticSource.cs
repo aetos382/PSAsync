@@ -22,8 +22,6 @@ namespace PSAsync
 
         private readonly string _switchName;
 
-        public bool AutoSuppress { get; set; } = true;
-
         public bool EnableDefault { get; set; } = false;
 
         public override bool IsEnabled(
@@ -45,7 +43,7 @@ namespace PSAsync
         {
             Requires.ArgumentNotNull(name, nameof(name));
 
-            if (!this.AutoSuppress || this.IsEnabled(name))
+            if (this.IsEnabled(name))
             {
                 this._internalSource.Write(name, value);
             }
