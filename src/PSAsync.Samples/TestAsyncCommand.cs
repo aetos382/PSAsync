@@ -19,14 +19,7 @@ namespace PSAsync.Samples
 
         protected override void ProcessRecord()
         {
-            try
-            {
-                this.DoProcessRecordAsync();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            this.DoProcessRecordAsync();
         }
 
         protected override void EndProcessing()
@@ -61,7 +54,7 @@ namespace PSAsync.Samples
 
                 await this.WriteObjectAsync(3, false, cancellationToken);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
