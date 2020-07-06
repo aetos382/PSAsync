@@ -12,7 +12,7 @@ namespace PSAsync
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
-            var accessor = AsyncCmdletAccessor<TCmdlet>.GetAccessor();
+            var accessor = AsyncCmdletAccessor<TCmdlet>.Instance;
 
             AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoBeginProcessingAsync);
         }
@@ -25,7 +25,7 @@ namespace PSAsync
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
-            var accessor = AsyncCmdletAccessor<TCmdlet>.GetAccessor();
+            var accessor = AsyncCmdletAccessor<TCmdlet>.Instance;
 
             AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoProcessRecordAsync);
         }
@@ -37,8 +37,8 @@ namespace PSAsync
                 IAsyncCmdlet
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
-            
-            var accessor = AsyncCmdletAccessor<TCmdlet>.GetAccessor();
+
+            var accessor = AsyncCmdletAccessor<TCmdlet>.Instance;
 
             AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoEndProcessingAsync);
         }

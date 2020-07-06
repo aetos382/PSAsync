@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
@@ -14,7 +13,7 @@ namespace PSAsync
             Cmdlet,
             IAsyncCmdlet
     {
-        public AsyncCmdletAccessor()
+        private AsyncCmdletAccessor()
         {
             this._beginProcessingAsync =
                 new Lazy<AsyncOperationDelegate>(() => GetBeginProcessingAsync());
@@ -122,17 +121,7 @@ namespace PSAsync
             return task;
         }
 
-        private static readonly ConcurrentDictionary<Type, object> _accessors =
-            new ConcurrentDictionary<Type, object>();
-
-        public static AsyncCmdletAccessor<TCmdlet> GetAccessor()
-        {
-            var accessor = _accessors.GetOrAdd(
-                typeof(TCmdlet),
-                type => new AsyncCmdletAccessor<TCmdlet>());
-
-            return (AsyncCmdletAccessor<TCmdlet>)accessor;
-        }
+        public static readonly AsyncCmdletAccessor<TCmdlet> Instance = new AsyncCmdletAccessor<TCmdlet>();
 
         private static AsyncOperationDelegate GetBeginProcessingAsync()
         {
