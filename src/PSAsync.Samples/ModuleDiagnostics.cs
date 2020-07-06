@@ -7,6 +7,11 @@ using Microsoft.Extensions.DiagnosticAdapter;
 
 namespace PSAsync.Samples
 {
+#pragma warning disable CA1822 // メンバーを static に設定します
+#pragma warning disable CA1801 // 使用されていないパラメーターの確認
+#pragma warning disable IDE0051 // 使用されていないプライベート メンバーを削除する
+#pragma warning disable IDE0060 // 未使用のパラメーターを削除します
+
     public class ModuleDiagnostics :
         IModuleAssemblyInitializer
     {
@@ -120,25 +125,6 @@ namespace PSAsync.Samples
 
                 Console.WriteLine($"AsyncMethodRunner.AsyncAction.Stop(id: {activity.Id}, duration: {activity.Duration})");
             }
-
-            [DiagnosticName("OperationCancelled")]
-            private void OnOperationCancelled()
-            {
-                Console.WriteLine("AsyncMethodRunner.OperationCancelled()");
-            }
-
-            [DiagnosticName("PipelineStopped")]
-            private void OnPipelineStopped()
-            {
-                Console.WriteLine("AsyncMethodRunner.PipelineStopped()");
-            }
-
-            [DiagnosticName("Exception")]
-            private void OnException(Exception exception)
-            {
-                Console.WriteLine("AsyncMethodRunner.Exception");
-                Console.WriteLine(exception.ToString());
-            }
         }
 
         private class AsyncCmdletContextListener
@@ -197,4 +183,9 @@ namespace PSAsync.Samples
             }
         }
     }
+
+#pragma warning restore IDE0060 // 未使用のパラメーターを削除します
+#pragma warning restore IDE0051 // 使用されていないプライベート メンバーを削除する
+#pragma warning restore CA1801 // 使用されていないパラメーターの確認
+#pragma warning restore CA1822 // メンバーを static に設定します
 }
