@@ -8,15 +8,6 @@ namespace PSAsync
 {
     internal static class AsyncMethodRunner
     {
-        private static class DiagnosticConstants
-        {
-            public const string SourceName = "PSAsync.AsyncMethodRunner";
-
-            public const string TraceSwitchName = SourceName + ".TraceEnabled";
-
-            public const string AsyncActionActivity = "AsyncAction";
-        }
-
         public static void DoAsyncOperation<TCmdlet>(
             TCmdlet cmdlet,
             Func<TCmdlet, CancellationToken, Task> asyncMethod)
@@ -74,6 +65,15 @@ namespace PSAsync
                 {
                 }
             }
+        }
+
+        private static class DiagnosticConstants
+        {
+            public const string SourceName = "PSAsync.AsyncMethodRunner";
+
+            public const string TraceSwitchName = SourceName + ".TraceEnabled";
+
+            public const string AsyncActionActivity = "AsyncAction";
         }
     }
 }

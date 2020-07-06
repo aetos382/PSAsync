@@ -26,19 +26,6 @@ namespace PSAsync
                 new Lazy<AsyncOperationDelegate>(() => GetEndProcessingAsync());
         }
 
-        private static class DiagnosticConstants
-        {
-            public const string SourceName = "PSAsync.AsyncCmdletAccessor";
-
-            public const string TraceSwitchName = SourceName + ".TraceEnabled";
-
-            public const string BeginProcessingAsyncActivity = "BeginProcessingAsync";
-
-            public const string ProcessRecordAsyncActivity = "ProcessRecordAsync";
-
-            public const string EndProcessingAsyncActivity = "EndProcessingAsync";
-        }
-
         private delegate Task AsyncOperationDelegate(
             TCmdlet cmdlet,
             CancellationToken cancellationToken);
@@ -190,6 +177,19 @@ namespace PSAsync
                 cancellationTokenParameter);
 
             return lambda.Compile();
+        }
+
+        private static class DiagnosticConstants
+        {
+            public const string SourceName = "PSAsync.AsyncCmdletAccessor";
+
+            public const string TraceSwitchName = SourceName + ".TraceEnabled";
+
+            public const string BeginProcessingAsyncActivity = "BeginProcessingAsync";
+
+            public const string ProcessRecordAsyncActivity = "ProcessRecordAsync";
+
+            public const string EndProcessingAsyncActivity = "EndProcessingAsync";
         }
     }
 }
