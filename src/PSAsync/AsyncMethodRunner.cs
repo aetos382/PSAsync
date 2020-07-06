@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Management.Automation;
 using System.Threading;
@@ -24,7 +24,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            var diagnosticSource = new SwitchingDiagnosticSource(
+            using var diagnosticSource = new SwitchingDiagnosticSource(
                 DiagnosticConstants.SourceName,
                 DiagnosticConstants.TraceSwitchName);
 
