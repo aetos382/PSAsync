@@ -23,10 +23,12 @@ namespace PSAsync.Samples
         [Conditional("DEBUG")]
         private void SetupDiagnosticsListening()
         {
+            /*
             AppContext.SetSwitch("PSAsync.AsyncCmdletAccessor.TraceEnabled", true);
             AppContext.SetSwitch("PSAsync.AsyncMethodRunner.TraceEnabled", true);
             AppContext.SetSwitch("PSAsync.AsyncCmdletContext.TraceEnabled", true);
             AppContext.SetSwitch("PSAsync.PowerShellSynchronizationContext.TraceEnabled", true);
+            */
 
             DiagnosticListener.AllListeners.Subscribe(
                 listener => {
