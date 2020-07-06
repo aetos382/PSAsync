@@ -57,6 +57,8 @@ namespace PSAsync
 
         private readonly TaskCompletionSource<Unit> _tcs = new TaskCompletionSource<Unit>();
 
+#pragma warning disable CA1031 // 一般的な例外の種類はキャッチしません
+
         public void Invoke()
         {
             try
@@ -69,7 +71,7 @@ namespace PSAsync
 
                 this._action(this._cmdlet);
 
-                this._tcs.SetResult(default);
+                this._tcs.SetResult(Unit.Instance);
             }
             catch (OperationCanceledException)
             {
@@ -84,6 +86,8 @@ namespace PSAsync
                 this._postAction?.Invoke(this._postActionState);
             }
         }
+
+#pragma warning restore CA1031 // 一般的な例外の種類はキャッチしません
 
         public Task Task
         {
