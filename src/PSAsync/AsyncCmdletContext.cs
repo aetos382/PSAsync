@@ -36,24 +36,9 @@ namespace PSAsync
             Cmdlet,
             IAsyncCmdlet
     {
-        private static class DiagnosticConstants
-        {
-            public const string SourceName = "PSAsync.AsyncCmdletContext";
-
-            public const string TraceSwitchName = SourceName + ".TraceEnabled";
-
-            public const string Construct = "Construct";
-
-            public const string Dispose = "Dispose";
-
-            public const string Close = "Close";
-
-            public const string QueueAction = "QueueAction";
-
-            public const string CancelAsyncOperations = "CancelAsyncOperations";
-        }
-
         private readonly TCmdlet _cmdlet;
+
+        private readonly int _mainThreadId;
 
         private readonly BlockingCollection<IAction> _queue;
 
@@ -83,6 +68,8 @@ namespace PSAsync
             this._originalSynchronizationContext = SynchronizationContext.Current;
 
             this._cmdlet = cmdlet;
+
+            this._mainThreadId = Thread.CurrentThread.ManagedThreadId;
 
             this._queue = new BlockingCollection<IAction>();
 
@@ -174,7 +161,7 @@ namespace PSAsync
                 linkedTokenSource,
                 linkedTokenSource.Token);
         }
-
+        
         public void QueueAction(
             IAction action)
         {
@@ -227,6 +214,14 @@ namespace PSAsync
             return this._cts.Token;
         }
 
+        internal bool IsMainThread
+        {
+            get
+            {
+                return Thread.CurrentThread.ManagedThreadId == this._mainThreadId;
+            }
+        }
+
         public static AsyncCmdletContext<TCmdlet> GetContext(
             TCmdlet cmdlet)
         {
@@ -273,6 +268,23 @@ namespace PSAsync
             {
                 throw new ObjectDisposedException(nameof(AsyncCmdletContext<TCmdlet>));
             }
+        }
+
+        private static class DiagnosticConstants
+        {
+            public const string SourceName = "PSAsync.AsyncCmdletContext";
+
+            public const string TraceSwitchName = SourceName + ".TraceEnabled";
+
+            public const string Construct = "Construct";
+
+            public const string Dispose = "Dispose";
+
+            public const string Close = "Close";
+
+            public const string QueueAction = "QueueAction";
+
+            public const string CancelAsyncOperations = "CancelAsyncOperations";
         }
     }
 }
