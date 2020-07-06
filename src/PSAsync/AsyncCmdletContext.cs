@@ -264,8 +264,8 @@ namespace PSAsync
             return true;
         }
 
-        private static readonly ConcurrentDictionary<TCmdlet, AsyncCmdletContext<TCmdlet>> _contexts =
-            new ConcurrentDictionary<TCmdlet, AsyncCmdletContext<TCmdlet>>();
+        private static readonly Dictionary<TCmdlet, AsyncCmdletContext<TCmdlet>> _contexts =
+            new Dictionary<TCmdlet, AsyncCmdletContext<TCmdlet>>();
 
         private void CheckDisposed()
         {
