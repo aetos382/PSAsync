@@ -117,15 +117,19 @@ namespace PSAsync
 
             if (traceEnabled)
             {
-                task.ContinueWith(t => {
+                task.ContinueWith(
+                    t => {
 
-                    this._diagnosticSource.StopActivity(
-                        activity!,
-                        new {
-                            CmdletType = typeof(TCmdlet)
-                        });
+                        this._diagnosticSource.StopActivity(
+                            activity!,
+                            new {
+                                CmdletType = typeof(TCmdlet)
+                            });
 
-                }, TaskContinuationOptions.ExecuteSynchronously);
+                    },
+                    CancellationToken.None,
+                    TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Current);
             }
 
             return task;

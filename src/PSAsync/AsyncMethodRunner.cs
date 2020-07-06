@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Management.Automation;
 using System.Threading;
@@ -42,7 +42,9 @@ namespace PSAsync
                     (t, state) =>
                         ((AsyncCmdletContext<TCmdlet>)state)!.Close(),
                     context,
-                    TaskContinuationOptions.ExecuteSynchronously);
+                    CancellationToken.None,
+                    TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Current);
 
                 foreach (var action in context.GetActions())
                 {
