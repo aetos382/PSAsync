@@ -10,6 +10,7 @@ namespace PSAsync
         internal static Task QueueAction<TCmdlet>(
             this TCmdlet cmdlet,
             Action<TCmdlet> action,
+            bool runSynchronouslyIfOnTheMainThread,
             CancellationToken cancellationToken)
             where TCmdlet :
                 Cmdlet,
@@ -19,6 +20,12 @@ namespace PSAsync
             Requires.ArgumentNotNull(action, nameof(action));
 
             var context = AsyncCmdletContext.GetContext(cmdlet);
+
+            if (runSynchronouslyIfOnTheMainThread && context.IsMainThread)
+            {
+                action(cmdlet);
+                return Task.CompletedTask;
+            }
 
             var awaitableAction = context.QueueAction(
                 cmdlet,
