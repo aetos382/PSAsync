@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace PSAsync
 {
-    public static partial class AsyncCmdletExtensions
+    public static class AsyncCmdletOutputExtensions
     {
         public static Task WriteObjectAsync<TCmdlet>(
             this TCmdlet cmdlet,

@@ -1,9 +1,8 @@
 ﻿using System.Management.Automation;
-using System.Threading;
 
 namespace PSAsync
 {
-    public static partial class AsyncCmdletExtensions
+    public static class AsyncCmdletInvocationExtensions
     {
         public static void DoBeginProcessingAsync<TCmdlet>(
             this TCmdlet cmdlet)

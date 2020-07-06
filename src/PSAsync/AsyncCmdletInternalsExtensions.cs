@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PSAsync
 {
-    public static partial class AsyncCmdletExtensions
+    public static class AsyncCmdletInternalsExtensions
     {
         internal static Task QueueAction<TCmdlet>(
             this TCmdlet cmdlet,
