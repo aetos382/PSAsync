@@ -71,15 +71,15 @@ namespace PSAsync
 
                 this._action(this._cmdlet);
 
-                this._tcs.SetResult(Unit.Instance);
+                this._tcs.TrySetResult(Unit.Instance);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException ex)
             {
-                this._tcs.SetCanceled();
+                this._tcs.TrySetCanceled(ex.CancellationToken);
             }
             catch (Exception ex)
             {
-                this._tcs.SetException(ex);
+                this._tcs.TrySetException(ex);
             }
             finally
             {
