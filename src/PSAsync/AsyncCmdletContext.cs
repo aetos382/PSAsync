@@ -103,6 +103,11 @@ namespace PSAsync
                 return;
             }
 
+            if (this.IsMainThread)
+            {
+                throw new InvalidOperationException();
+            }
+
             this._disposed = true;
 
             if (disposing)
