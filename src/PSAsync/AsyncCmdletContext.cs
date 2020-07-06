@@ -103,7 +103,7 @@ namespace PSAsync
                 return;
             }
 
-            if (this.IsMainThread)
+            if (!this.IsMainThread)
             {
                 throw new InvalidOperationException();
             }
