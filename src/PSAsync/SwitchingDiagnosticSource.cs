@@ -37,6 +37,21 @@ namespace PSAsync
             return this._internalSource.IsEnabled(name);
         }
 
+        public override bool IsEnabled(
+            string name,
+            object arg1,
+            object arg2 = null)
+        {
+            Requires.ArgumentNotNull(name, nameof(name));
+
+            if (!this.IsSwitchEnabled)
+            {
+                return false;
+            }
+
+            return this._internalSource.IsEnabled(name, arg1, arg2);
+        }
+
         public override void Write(
             string name,
             object value)
