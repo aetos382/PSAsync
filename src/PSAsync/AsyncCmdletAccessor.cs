@@ -54,7 +54,7 @@ namespace PSAsync
                 [MaybeNullWhen(false)]
                 out AsyncOperationDelegate asyncDelegate)
             {
-                if (this.IsImplemented)
+                if (!this.IsImplemented)
                 {
                     asyncDelegate = null!;
                     return false;
