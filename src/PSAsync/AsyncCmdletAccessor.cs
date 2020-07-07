@@ -58,9 +58,12 @@ namespace PSAsync
                 DiagnosticConstants.SourceName,
                 DiagnosticConstants.TraceSwitchName);
 
-        public Task DoBeginProcessingAsync(
-            Cmdlet cmdlet,
+        public Task DoBeginProcessingAsync<TCmdlet>(
+            TCmdlet cmdlet,
             CancellationToken cancellationToken)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
@@ -71,9 +74,12 @@ namespace PSAsync
                 cancellationToken);
         }
 
-        public Task DoProcessRecordAsync(
-            Cmdlet cmdlet,
+        public Task DoProcessRecordAsync<TCmdlet>(
+            TCmdlet cmdlet,
             CancellationToken cancellationToken)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
@@ -84,9 +90,12 @@ namespace PSAsync
                 cancellationToken);
         }
 
-        public Task DoEndProcessingAsync(
-            Cmdlet cmdlet,
+        public Task DoEndProcessingAsync<TCmdlet>(
+            TCmdlet cmdlet,
             CancellationToken cancellationToken)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
@@ -104,7 +113,6 @@ namespace PSAsync
                 return this._beginProcessingAsync.Value.IsImplemented;
             }
         }
-        
 
         public bool IsProcessRecordAsyncImplemented
         {
@@ -122,11 +130,14 @@ namespace PSAsync
             }
         }
 
-        private Task InvokeWithTraceActivity(
+        private Task InvokeWithTraceActivity<TCmdlet>(
             string activityName,
-            Cmdlet cmdlet,
+            TCmdlet cmdlet,
             in AsyncPipelineMethod operation,
             CancellationToken cancellationToken)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
         {
             if (!operation.IsImplemented)
             {

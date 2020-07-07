@@ -24,8 +24,11 @@ namespace PSAsync
 
         private readonly DiagnosticSource _diagnosticSource;
 
-        public static AsyncCmdletContext Start(
-            Cmdlet cmdlet)
+        public static AsyncCmdletContext Start<TCmdlet>(
+            TCmdlet cmdlet)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
@@ -209,8 +212,11 @@ namespace PSAsync
             }
         }
 
-        public static AsyncCmdletContext GetContext(
-            Cmdlet cmdlet)
+        public static AsyncCmdletContext GetContext<TCmdlet>(
+            TCmdlet cmdlet)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
@@ -222,11 +228,13 @@ namespace PSAsync
             return context;
         }
 
-        public static bool TryGetContext(
-            Cmdlet cmdlet,
-
+        public static bool TryGetContext<TCmdlet>(
+            TCmdlet cmdlet,
             [MaybeNullWhen(false)]
             out AsyncCmdletContext context)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
