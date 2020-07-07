@@ -1,4 +1,4 @@
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace PSAsync
 {
@@ -14,6 +14,11 @@ namespace PSAsync
 
             var accessor = AsyncCmdletAccessor.GetAccessor(cmdlet.GetType());
 
+            if (!accessor.IsBeginProcessingAsyncImplemented)
+            {
+                return;
+            }
+
             AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoBeginProcessingAsync);
         }
 
@@ -27,6 +32,11 @@ namespace PSAsync
 
             var accessor = AsyncCmdletAccessor.GetAccessor(cmdlet.GetType());
 
+            if (!accessor.IsProcessRecordAsyncImplemented)
+            {
+                return;
+            }
+
             AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoProcessRecordAsync);
         }
 
@@ -39,6 +49,11 @@ namespace PSAsync
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
             var accessor = AsyncCmdletAccessor.GetAccessor(cmdlet.GetType());
+
+            if (!accessor.IsEndProcessingAsyncImplemented)
+            {
+                return;
+            }
 
             AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoEndProcessingAsync);
         }
