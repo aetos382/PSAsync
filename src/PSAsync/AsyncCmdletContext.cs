@@ -125,9 +125,10 @@ namespace PSAsync
                 Unit.Instance);
         }
 
-        public AwaitableAction<TCmdlet> CreateAction<TCmdlet>(
+        public AwaitableAction<TCmdlet, TArgument, TResult> CreateAction<TCmdlet, TArgument, TResult>(
             TCmdlet cmdlet,
-            Action<TCmdlet> action,
+            Func<TCmdlet, TArgument, AsyncCmdletContext, TResult> action,
+            TArgument argument,
             CancellationToken cancellationToken)
             where TCmdlet :
                 Cmdlet,
@@ -141,14 +142,15 @@ namespace PSAsync
             var linkedTokenSource =
                 CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, this._cts.Token);
 
-            return new AwaitableAction<TCmdlet>(
+            return new AwaitableAction<TCmdlet, TArgument, TResult>(
                 cmdlet,
-                action,
+                (c, a) => action(c, a, this),
+                argument,
                 state => ((CancellationTokenSource?)state)!.Dispose(),
                 linkedTokenSource,
                 linkedTokenSource.Token);
         }
-        
+
         public void QueueAction(
             IAction action)
         {
@@ -163,9 +165,10 @@ namespace PSAsync
                 Unit.Instance);
         }
         
-        public AwaitableAction<TCmdlet> QueueAction<TCmdlet>(
+        public AwaitableAction<TCmdlet, TArgument, TResult> QueueAction<TCmdlet, TArgument, TResult>(
             TCmdlet cmdlet,
-            Action<TCmdlet> action,
+            Func<TCmdlet, TArgument, AsyncCmdletContext, TResult> action,
+            TArgument argument,
             CancellationToken cancellationToken)
             where TCmdlet :
                 Cmdlet,
@@ -176,13 +179,13 @@ namespace PSAsync
 
             this.CheckDisposed();
 
-            var awaitableAction = this.CreateAction(cmdlet, action, cancellationToken);
+            var awaitableAction = this.CreateAction(cmdlet, action, argument, cancellationToken);
 
             this.QueueAction(awaitableAction);
 
             return awaitableAction;
         }
-
+        
         public void CancelAsyncOperations()
         {
             if (this._disposed)
@@ -211,6 +214,8 @@ namespace PSAsync
                 return Thread.CurrentThread.ManagedThreadId == this._mainThreadId;
             }
         }
+        
+        internal ShouldContinueContext ShouldContinueContext { get; set; }
 
         public static AsyncCmdletContext GetContext<TCmdlet>(
             TCmdlet cmdlet)

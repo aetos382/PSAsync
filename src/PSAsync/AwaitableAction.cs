@@ -5,40 +5,29 @@ using System.Threading.Tasks;
 
 namespace PSAsync
 {
-    internal class AwaitableAction<TCmdlet> :
+    internal class AwaitableAction<TCmdlet, TArgument, TResult> :
         IAction
         where TCmdlet :
             Cmdlet,
             IAsyncCmdlet
     {
-        public AwaitableAction(
-            TCmdlet cmdlet,
-            Action<TCmdlet> action,
-            CancellationToken cancellationToken)
-            : this(
-                cmdlet,
-                action,
-                null,
-                null,
-                cancellationToken)
-        {
-        }
-
         internal AwaitableAction(
             TCmdlet cmdlet,
-            Action<TCmdlet> action,
-            Action<object?>? postAction,
-            object? postActionState,
-            CancellationToken cancellationToken)
+            Func<TCmdlet, TArgument, TResult> action,
+            TArgument argument,
+            Action<object?>? postAction = null,
+            object? postActionState = null,
+            CancellationToken cancellationToken = default)
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
             Requires.ArgumentNotNull(action, nameof(action));
 
             this._cmdlet = cmdlet;
             this._action = action;
-            this._cancellationToken = cancellationToken;
+            this._argument = argument;
             this._postAction = postAction;
             this._postActionState = postActionState;
+            this._cancellationToken = cancellationToken;
 
             cancellationToken.Register(
                 () => this._tcs.TrySetCanceled(cancellationToken),
@@ -47,7 +36,9 @@ namespace PSAsync
 
         private readonly TCmdlet _cmdlet;
 
-        private readonly Action<TCmdlet> _action;
+        private readonly Func<TCmdlet, TArgument, TResult> _action;
+
+        private readonly TArgument _argument;
 
         private readonly Action<object?>? _postAction;
 
@@ -55,7 +46,7 @@ namespace PSAsync
 
         private readonly CancellationToken _cancellationToken;
 
-        private readonly TaskCompletionSource<Unit> _tcs = new TaskCompletionSource<Unit>();
+        private readonly TaskCompletionSource<TResult> _tcs = new TaskCompletionSource<TResult>();
 
 #pragma warning disable CA1031 // 一般的な例外の種類はキャッチしません
 
@@ -69,9 +60,9 @@ namespace PSAsync
                     return;
                 }
 
-                this._action(this._cmdlet);
+                var result = this._action(this._cmdlet, this._argument);
 
-                this._tcs.TrySetResult(Unit.Instance);
+                this._tcs.TrySetResult(result);
             }
             catch (OperationCanceledException ex)
             {
@@ -89,7 +80,7 @@ namespace PSAsync
 
 #pragma warning restore CA1031 // 一般的な例外の種類はキャッチしません
 
-        public Task Task
+        public Task<TResult> Task
         {
             get
             {

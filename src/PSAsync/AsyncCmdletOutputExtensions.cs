@@ -20,7 +20,8 @@ namespace PSAsync
             cancellationToken.ThrowIfCancellationRequested();
 
             var task = cmdlet.QueueAction(
-                c => c.WriteObject(obj, enumerateCollection),
+                (c, a) => c.WriteObject(a.obj, a.enumerateCollection),
+                (obj, enumerateCollection),
                 true,
                 cancellationToken);
 
@@ -40,7 +41,8 @@ namespace PSAsync
             cancellationToken.ThrowIfCancellationRequested();
 
             var task = cmdlet.QueueAction(
-                c => c.WriteError(error),
+                (c, a) => c.WriteError(a),
+                error,
                 true,
                 cancellationToken);
 
@@ -60,7 +62,8 @@ namespace PSAsync
             cancellationToken.ThrowIfCancellationRequested();
 
             var task = cmdlet.QueueAction(
-                c => c.WriteWarning(message),
+                (c, a) => c.WriteWarning(a),
+                message,
                 true,
                 cancellationToken);
 
@@ -80,7 +83,8 @@ namespace PSAsync
             cancellationToken.ThrowIfCancellationRequested();
 
             var task = cmdlet.QueueAction(
-                c => c.WriteVerbose(message),
+                (c, a) => c.WriteVerbose(a),
+                message,
                 true,
                 cancellationToken);
 
@@ -100,7 +104,8 @@ namespace PSAsync
             cancellationToken.ThrowIfCancellationRequested();
 
             var task = cmdlet.QueueAction(
-                c => c.WriteInformation(information),
+                (c, a) => c.WriteInformation(a),
+                information,
                 true,
                 cancellationToken);
 
@@ -121,7 +126,8 @@ namespace PSAsync
             cancellationToken.ThrowIfCancellationRequested();
 
             var task = cmdlet.QueueAction(
-                c => c.WriteInformation(messageData, tags),
+                (c, a) => c.WriteInformation(a.messageData, a.tags),
+                (messageData, tags),
                 true,
                 cancellationToken);
 
@@ -141,7 +147,148 @@ namespace PSAsync
             cancellationToken.ThrowIfCancellationRequested();
 
             var task = cmdlet.QueueAction(
-                c => c.WriteProgress(progress),
+                (c, a) => c.WriteProgress(a),
+                progress,
+                true,
+                cancellationToken);
+
+            return task;
+        }
+
+        public static Task<bool> ShouldProcessAsync<TCmdlet>(
+            this TCmdlet cmdlet,
+            string target,
+            CancellationToken cancellationToken = default)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
+        {
+            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var task = cmdlet.QueueAction(
+                (c, a) => c.ShouldProcess(a),
+                target,
+                true,
+                cancellationToken);
+
+            return task;
+        }
+
+        public static Task<bool> ShouldProcessAsync<TCmdlet>(
+            this TCmdlet cmdlet,
+            string target,
+            string action,
+            CancellationToken cancellationToken = default)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
+        {
+            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var task = cmdlet.QueueAction(
+                (c, a) => c.ShouldProcess(a.target, a.action),
+                (target, action),
+                true,
+                cancellationToken);
+
+            return task;
+        }
+
+        public struct ShouldProcessResult
+        {
+            public ShouldProcessResult(
+                bool result,
+                ShouldProcessReason reason)
+            {
+                this.Result = result;
+                this.Reason = reason;
+            }
+
+            public bool Result { get; }
+
+            public ShouldProcessReason Reason { get; }
+
+            public void Deconstruct(
+                out bool result,
+                out ShouldProcessReason reason)
+            {
+                result = this.Result;
+                reason = this.Reason;
+            }
+        }
+
+        public static Task<ShouldProcessResult> ShouldProcessAsync<TCmdlet>(
+            this TCmdlet cmdlet,
+            string verboseDescription,
+            string verboseWarning,
+            string caption,
+            CancellationToken cancellationToken = default)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
+        {
+            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var task = cmdlet.QueueAction(
+                (c, a, x) => {
+                    bool result = c.ShouldProcess(a.verboseDescription, a.verboseWarning, a.caption, out var reason);
+                    return new ShouldProcessResult(result, reason);
+                },
+                (verboseDescription, verboseWarning, caption),
+                true,
+                cancellationToken);
+
+            return task;
+        }
+
+        public static Task<bool> ShouldContinueAsync<TCmdlet>(
+            this TCmdlet cmdlet,
+            string query,
+            string caption,
+            bool hasSecurityImpact = false,
+            bool saveContext = false,
+            CancellationToken cancellationToken = default)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
+        {
+            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var task = cmdlet.QueueAction(
+                (c, a, x) => {
+
+                    bool yesToAll = false;
+                    bool noToAll = false;
+
+                    if (saveContext)
+                    {
+                        (yesToAll, noToAll) = x.ShouldContinueContext;
+                    }
+
+                    bool result =
+                        c.ShouldContinue(
+                            a.query,
+                            a.caption,
+                            a.hasSecurityImpact,
+                            ref yesToAll,
+                            ref noToAll);
+
+                    if (saveContext)
+                    {
+                        x.ShouldContinueContext = new ShouldContinueContext(yesToAll, noToAll);
+                    }
+
+                    return result;
+                },
+                (query, caption, hasSecurityImpact),
                 true,
                 cancellationToken);
 
