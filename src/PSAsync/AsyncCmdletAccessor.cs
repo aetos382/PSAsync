@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
@@ -34,11 +35,33 @@ namespace PSAsync
         private readonly struct AsyncPipelineMethod
         {
             public AsyncPipelineMethod(
-                AsyncOperationDelegate? @delegate,
+                AsyncOperationDelegate? asyncDelegate,
                 bool isImplemented)
             {
-                this.Delegate = @delegate;
+                if (isImplemented)
+                {
+                    if (asyncDelegate is null)
+                    {
+                        throw new ArgumentNullException(nameof(asyncDelegate));
+                    }
+                }
+
+                this.Delegate = asyncDelegate;
                 this.IsImplemented = isImplemented;
+            }
+
+            public bool TryGetDelegate(
+                [MaybeNullWhen(false)]
+                out AsyncOperationDelegate asyncDelegate)
+            {
+                if (this.IsImplemented)
+                {
+                    asyncDelegate = null!;
+                    return false;
+                }
+
+                asyncDelegate = this.Delegate!;
+                return true;
             }
 
             public AsyncOperationDelegate? Delegate { get; }
@@ -139,7 +162,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            if (!operation.IsImplemented)
+            if (!operation.TryGetDelegate(out var asyncDelegate))
             {
                 return Task.CompletedTask;
             }
@@ -162,7 +185,7 @@ namespace PSAsync
                     });
             }
 
-            var task = operation.Delegate(cmdlet, cancellationToken);
+            var task = asyncDelegate(cmdlet, cancellationToken);
 
             if (traceEnabled)
             {
