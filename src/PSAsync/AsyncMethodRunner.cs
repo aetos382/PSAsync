@@ -27,7 +27,7 @@ namespace PSAsync
             {
                 task.ContinueWith(
                     (t, state) =>
-                        ((AsyncCmdletContext<TCmdlet>?)state)!.Close(),
+                        ((AsyncCmdletContext?)state)!.Close(),
                     context,
                     CancellationToken.None,
                     TaskContinuationOptions.ExecuteSynchronously,

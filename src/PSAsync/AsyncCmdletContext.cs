@@ -8,35 +8,11 @@ using System.Threading;
 
 namespace PSAsync
 {
-    internal static class AsyncCmdletContext
-    {
-        public static AsyncCmdletContext<TCmdlet> Start<TCmdlet>(
-            TCmdlet cmdlet)
-            where TCmdlet :
-                Cmdlet,
-                IAsyncCmdlet
-        {
-            return AsyncCmdletContext<TCmdlet>.Start(cmdlet);
-        }
-
-        public static AsyncCmdletContext<TCmdlet> GetContext<TCmdlet>(
-            TCmdlet cmdlet)
-            where TCmdlet :
-                Cmdlet,
-                IAsyncCmdlet
-        {
-            return AsyncCmdletContext<TCmdlet>.GetContext(cmdlet);
-        }
-    }
-
-    internal class AsyncCmdletContext<TCmdlet> :
+    internal class AsyncCmdletContext :
         IActionConsumer,
         IDisposable
-        where TCmdlet :
-            Cmdlet,
-            IAsyncCmdlet
     {
-        private readonly TCmdlet _cmdlet;
+        private readonly Cmdlet _cmdlet;
 
         private readonly int _mainThreadId;
 
@@ -48,17 +24,17 @@ namespace PSAsync
 
         private readonly DiagnosticSource _diagnosticSource;
 
-        public static AsyncCmdletContext<TCmdlet> Start(
-            TCmdlet cmdlet)
+        public static AsyncCmdletContext Start(
+            Cmdlet cmdlet)
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
-            var context = new AsyncCmdletContext<TCmdlet>(cmdlet);
+            var context = new AsyncCmdletContext(cmdlet);
             return context;
         }
 
         private AsyncCmdletContext(
-            TCmdlet cmdlet)
+            Cmdlet cmdlet)
         {
             if (!_contexts.TryAdd(cmdlet, this))
             {
@@ -146,10 +122,13 @@ namespace PSAsync
                 Unit.Instance);
         }
 
-        public AwaitableAction<TCmdlet> CreateAction(
+        public AwaitableAction<TCmdlet> CreateAction<TCmdlet>(
             TCmdlet cmdlet,
             Action<TCmdlet> action,
             CancellationToken cancellationToken)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
             Requires.ArgumentNotNull(action, nameof(action));
@@ -181,10 +160,13 @@ namespace PSAsync
                 Unit.Instance);
         }
         
-        public AwaitableAction<TCmdlet> QueueAction(
+        public AwaitableAction<TCmdlet> QueueAction<TCmdlet>(
             TCmdlet cmdlet,
             Action<TCmdlet> action,
             CancellationToken cancellationToken)
+            where TCmdlet :
+                Cmdlet,
+                IAsyncCmdlet
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
             Requires.ArgumentNotNull(action, nameof(action));
@@ -227,8 +209,8 @@ namespace PSAsync
             }
         }
 
-        public static AsyncCmdletContext<TCmdlet> GetContext(
-            TCmdlet cmdlet)
+        public static AsyncCmdletContext GetContext(
+            Cmdlet cmdlet)
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
@@ -241,14 +223,14 @@ namespace PSAsync
         }
 
         public static bool TryGetContext(
-            TCmdlet cmdlet,
+            Cmdlet cmdlet,
 
-            [NotNullWhen(true)]
-            out AsyncCmdletContext<TCmdlet>? context)
+            [MaybeNullWhen(false)]
+            out AsyncCmdletContext context)
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
-            context = null;
+            context = null!;
 
             if (!_contexts.TryGetValue(cmdlet, out var ctx))
             {
@@ -264,14 +246,14 @@ namespace PSAsync
             return true;
         }
 
-        private static readonly Dictionary<TCmdlet, AsyncCmdletContext<TCmdlet>> _contexts =
-            new Dictionary<TCmdlet, AsyncCmdletContext<TCmdlet>>();
+        private static readonly Dictionary<Cmdlet, AsyncCmdletContext> _contexts =
+            new Dictionary<Cmdlet, AsyncCmdletContext>();
 
         private void CheckDisposed()
         {
             if (this._disposed)
             {
-                throw new ObjectDisposedException(nameof(AsyncCmdletContext<TCmdlet>));
+                throw new ObjectDisposedException(nameof(AsyncCmdletContext));
             }
         }
 

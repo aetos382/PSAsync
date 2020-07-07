@@ -1,4 +1,4 @@
-﻿using System.Management.Automation;
+using System.Management.Automation;
 
 namespace PSAsync
 {
@@ -12,7 +12,7 @@ namespace PSAsync
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
-            var accessor = AsyncCmdletAccessor<TCmdlet>.Instance;
+            var accessor = AsyncCmdletAccessor.GetAccessor(cmdlet.GetType());
 
             AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoBeginProcessingAsync);
         }
@@ -25,7 +25,7 @@ namespace PSAsync
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
-            var accessor = AsyncCmdletAccessor<TCmdlet>.Instance;
+            var accessor = AsyncCmdletAccessor.GetAccessor(cmdlet.GetType());
 
             AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoProcessRecordAsync);
         }
@@ -38,7 +38,7 @@ namespace PSAsync
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
-            var accessor = AsyncCmdletAccessor<TCmdlet>.Instance;
+            var accessor = AsyncCmdletAccessor.GetAccessor(cmdlet.GetType());
 
             AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoEndProcessingAsync);
         }
@@ -51,7 +51,7 @@ namespace PSAsync
         {
             Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
 
-            if (AsyncCmdletContext<TCmdlet>.TryGetContext(cmdlet, out var context))
+            if (AsyncCmdletContext.TryGetContext(cmdlet, out var context))
             {
                 context.CancelAsyncOperations();
             }
