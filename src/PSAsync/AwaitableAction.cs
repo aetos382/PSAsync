@@ -52,6 +52,8 @@ namespace PSAsync
 
         public void Invoke()
         {
+            TResult result;
+
             try
             {
                 if (this._cancellationToken.IsCancellationRequested)
@@ -60,22 +62,24 @@ namespace PSAsync
                     return;
                 }
 
-                var result = this._action(this._cmdlet, this._argument);
-
-                this._tcs.TrySetResult(result);
+                result = this._action(this._cmdlet, this._argument);
             }
             catch (OperationCanceledException ex)
             {
                 this._tcs.TrySetCanceled(ex.CancellationToken);
+                return;
             }
             catch (Exception ex)
             {
                 this._tcs.TrySetException(ex);
+                return;
             }
             finally
             {
                 this._postAction?.Invoke(this._postActionState);
             }
+
+            this._tcs.TrySetResult(result);
         }
 
 #pragma warning restore CA1031 // 一般的な例外の種類はキャッチしません
