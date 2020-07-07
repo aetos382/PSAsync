@@ -245,7 +245,7 @@ namespace PSAsync
                     bool yesToAll = false;
                     bool noToAll = false;
 
-                    if (saveContext)
+                    if (a.saveContext)
                     {
                         (yesToAll, noToAll) = x.ShouldContinueContext;
                     }
@@ -258,14 +258,14 @@ namespace PSAsync
                             ref yesToAll,
                             ref noToAll);
 
-                    if (saveContext)
+                    if (a.saveContext)
                     {
                         x.ShouldContinueContext = new ShouldContinueContext(yesToAll, noToAll);
                     }
 
                     return new ShouldContinueResult(result, yesToAll, noToAll);
                 },
-                (query, caption, hasSecurityImpact),
+                (query, caption, hasSecurityImpact, saveContext),
                 true,
                 cancellationToken);
 
