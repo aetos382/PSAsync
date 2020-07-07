@@ -23,3 +23,7 @@ indent_size = 2
 indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
+
+[*.cs]
+dotnet_diagnostic.CA1062.severity = error
+dotnet_code_quality.null_check_validation_method = M:PSAsync.Requires.ArgumentNotNull``1(``0,System.String)

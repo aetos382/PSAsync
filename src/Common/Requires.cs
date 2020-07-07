@@ -4,12 +4,22 @@ using System.Runtime.CompilerServices;
 
 namespace PSAsync
 {
-    internal static class Requires
+    // https://github.com/dotnet/roslyn-analyzers/issues/3451
+    [AttributeUsage(AttributeTargets.Parameter)]
+    internal sealed class ValidatedNotNullAttribute :
+        Attribute
+    {
+    }
+
+    public static class Requires
     {
         [return: NotNull]
         public static T ArgumentNotNull<T>(
+            [ValidatedNotNull]
             T obj,
-            [CallerArgumentExpression("obj")] string parameterName = "")
+
+            [CallerArgumentExpression("obj")]
+            string parameterName = "")
             where T : class
         {
             if (obj is null)
