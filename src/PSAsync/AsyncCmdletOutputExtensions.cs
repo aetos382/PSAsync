@@ -198,29 +198,6 @@ namespace PSAsync
             return task;
         }
 
-        public struct ShouldProcessResult
-        {
-            public ShouldProcessResult(
-                bool result,
-                ShouldProcessReason reason)
-            {
-                this.Result = result;
-                this.Reason = reason;
-            }
-
-            public bool Result { get; }
-
-            public ShouldProcessReason Reason { get; }
-
-            public void Deconstruct(
-                out bool result,
-                out ShouldProcessReason reason)
-            {
-                result = this.Result;
-                reason = this.Reason;
-            }
-        }
-
         public static Task<ShouldProcessResult> ShouldProcessAsync<TCmdlet>(
             this TCmdlet cmdlet,
             string verboseDescription,
@@ -247,7 +224,7 @@ namespace PSAsync
             return task;
         }
 
-        public static Task<bool> ShouldContinueAsync<TCmdlet>(
+        public static Task<ShouldContinueResult> ShouldContinueAsync<TCmdlet>(
             this TCmdlet cmdlet,
             string query,
             string caption,
@@ -286,7 +263,7 @@ namespace PSAsync
                         x.ShouldContinueContext = new ShouldContinueContext(yesToAll, noToAll);
                     }
 
-                    return result;
+                    return new ShouldContinueResult(result, yesToAll, noToAll);
                 },
                 (query, caption, hasSecurityImpact),
                 true,
