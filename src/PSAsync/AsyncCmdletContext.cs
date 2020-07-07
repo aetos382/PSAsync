@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
@@ -182,6 +183,25 @@ namespace PSAsync
             this.CheckDisposed();
 
             var awaitableAction = this.CreateAction(cmdlet, action, argument, cancellationToken);
+
+            awaitableAction.Task.ContinueWith(
+                t => {
+                    bool pipelineStopped = t.Exception!
+                        .Flatten()
+                        .InnerExceptions
+                        .Any(
+                            e => e is PipelineStoppedException);
+
+                    if (!pipelineStopped)
+                    {
+                        return;
+                    }
+
+                    this._cts.Cancel();
+                },
+                this._cts.Token,
+                TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Current);
 
             if (runSynchronouslyOnMainThread && this.IsMainThread)
             {
