@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Management.Automation;
 using System.Threading;
@@ -60,8 +60,9 @@ namespace PSAsync.Samples
                 Type cmdletType)
             {
                 var activity = Activity.Current;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncCmdletAccessor.BeginProcessingAsync.Start(id: {activity.Id})");
+                Console.WriteLine($"AsyncCmdletAccessor.BeginProcessingAsync.Start(threadId: {threadId}, id: {activity.Id})");
             }
 
             [DiagnosticName("BeginProcessingAsync.Stop")]
@@ -69,8 +70,9 @@ namespace PSAsync.Samples
                 Type cmdletType)
             {
                 var activity = Activity.Current;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncCmdletAccessor.BeginProcessingAsync.Stop(id: {activity.Id})");
+                Console.WriteLine($"AsyncCmdletAccessor.BeginProcessingAsync.Stop(threadId: {threadId}, id: {activity.Id})");
             }
 
             [DiagnosticName("ProcessRecordAsync.Start")]
@@ -78,8 +80,9 @@ namespace PSAsync.Samples
                 Type cmdletType)
             {
                 var activity = Activity.Current;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncCmdletAccessor.ProcessRecordAsync.Start(id: {activity.Id})");
+                Console.WriteLine($"AsyncCmdletAccessor.ProcessRecordAsync.Start(threadId: {threadId}, id: {activity.Id})");
             }
 
             [DiagnosticName("ProcessRecordAsync.Stop")]
@@ -87,8 +90,9 @@ namespace PSAsync.Samples
                 Type cmdletType)
             {
                 var activity = Activity.Current;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncCmdletAccessor.ProcessRecordAsync.Stop(id: {activity.Id})");
+                Console.WriteLine($"AsyncCmdletAccessor.ProcessRecordAsync.Stop(threadId: {threadId}, id: {activity.Id})");
             }
 
             [DiagnosticName("EndProcessingAsync.Start")]
@@ -96,8 +100,9 @@ namespace PSAsync.Samples
                 Type cmdletType)
             {
                 var activity = Activity.Current;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncCmdletAccessor.EndProcessingAsync.Start(id: {activity.Id})");
+                Console.WriteLine($"AsyncCmdletAccessor.EndProcessingAsync.Start(threadId: {threadId}, id: {activity.Id})");
             }
 
             [DiagnosticName("EndProcessingAsync.Stop")]
@@ -105,8 +110,9 @@ namespace PSAsync.Samples
                 Type cmdletType)
             {
                 var activity = Activity.Current;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncCmdletAccessor.EndProcessingAsync.Stop(id: {activity.Id})");
+                Console.WriteLine($"AsyncCmdletAccessor.EndProcessingAsync.Stop(threadId: {threadId}, id: {activity.Id})");
             }
         }
 
@@ -116,16 +122,18 @@ namespace PSAsync.Samples
             private void OnStartAsyncAction()
             {
                 var activity = Activity.Current;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncMethodRunner.AsyncAction.Start(id: {activity.Id})");
+                Console.WriteLine($"AsyncMethodRunner.AsyncAction.Start(threadId: {threadId}, id: {activity.Id})");
             }
 
             [DiagnosticName("AsyncAction.Stop")]
             private void OnStopAsyncAction()
             {
                 var activity = Activity.Current;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncMethodRunner.AsyncAction.Stop(id: {activity.Id}, duration: {activity.Duration})");
+                Console.WriteLine($"AsyncMethodRunner.AsyncAction.Stop(threadId: {threadId}, id: {activity.Id}, duration: {activity.Duration})");
             }
         }
 
@@ -146,7 +154,7 @@ namespace PSAsync.Samples
             {
                 var threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncCmdletContext.QueueAction(canceled: {canceled}, action: {actionHashCode}, threadId: {threadId})");
+                Console.WriteLine($"AsyncCmdletContext.QueueAction(threadId: {threadId}), canceled: {canceled}, action: {actionHashCode}");
             }
             
             [DiagnosticName("CancelAsyncOperations")]
