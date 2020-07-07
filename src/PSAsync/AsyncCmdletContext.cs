@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Management.Automation;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PSAsync
 {
@@ -165,10 +166,11 @@ namespace PSAsync
                 Unit.Instance);
         }
         
-        public AwaitableAction<TCmdlet, TArgument, TResult> QueueAction<TCmdlet, TArgument, TResult>(
+        public Task<TResult> QueueAction<TCmdlet, TArgument, TResult>(
             TCmdlet cmdlet,
             Func<TCmdlet, TArgument, AsyncCmdletContext, TResult> action,
             TArgument argument,
+            bool runSynchronouslyOnMainThread,
             CancellationToken cancellationToken)
             where TCmdlet :
                 Cmdlet,
@@ -181,9 +183,16 @@ namespace PSAsync
 
             var awaitableAction = this.CreateAction(cmdlet, action, argument, cancellationToken);
 
-            this.QueueAction(awaitableAction);
+            if (runSynchronouslyOnMainThread && this.IsMainThread)
+            {
+                awaitableAction.Invoke();
+            }
+            else
+            {
+                this.QueueAction(awaitableAction);
+            }
 
-            return awaitableAction;
+            return awaitableAction.Task;
         }
         
         public void CancelAsyncOperations()

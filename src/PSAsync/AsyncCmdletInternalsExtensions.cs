@@ -22,19 +22,14 @@ namespace PSAsync
 
             var context = AsyncCmdletContext.GetContext(cmdlet);
 
-            if (runSynchronouslyIfOnTheMainThread && context.IsMainThread)
-            {
-                var result = action(cmdlet, argument, context);
-                return Task.FromResult(result);
-            }
-
-            var awaitableAction = context.QueueAction(
+            var task = context.QueueAction(
                 cmdlet,
                 action,
                 argument,
+                runSynchronouslyIfOnTheMainThread,
                 cancellationToken);
             
-            return awaitableAction.Task;
+            return task;
         }
 
         internal static Task<TResult> QueueAction<TCmdlet, TArgument, TResult>(
