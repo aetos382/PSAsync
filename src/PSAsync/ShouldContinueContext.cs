@@ -1,4 +1,6 @@
-﻿namespace PSAsync
+﻿using System.Diagnostics;
+
+namespace PSAsync
 {
     internal readonly struct ShouldContinueContext
     {
@@ -10,9 +12,17 @@
             this.NoToAll = noToAll;
         }
 
-        public bool YesToAll { get; }
+        public bool YesToAll
+        {
+            [DebuggerStepThrough]
+            get;
+        }
 
-        public bool NoToAll { get; }
+        public bool NoToAll
+        {
+            [DebuggerStepThrough]
+            get;
+        }
 
         public void Deconstruct(
             out bool yesToAll,

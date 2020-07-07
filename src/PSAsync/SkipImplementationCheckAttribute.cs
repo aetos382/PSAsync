@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace PSAsync
 {
@@ -8,6 +9,18 @@ namespace PSAsync
     public class SkipImplementationCheckAttribute :
         Attribute
     {
-        public bool Skip { get; set; } = true;
+        public SkipImplementationCheckAttribute()
+        {
+            this.Skip = true;
+        }
+
+        public bool Skip
+        {
+            [DebuggerStepThrough]
+            get;
+
+            [DebuggerStepThrough]
+            set;
+        }
     }
 }

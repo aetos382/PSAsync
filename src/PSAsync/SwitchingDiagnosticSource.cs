@@ -16,13 +16,22 @@ namespace PSAsync
 
             this._internalSource = new DiagnosticListener(sourceName);
             this._switchName = switchName;
+
+            this.EnableDefault = true;
         }
 
         private readonly DiagnosticSource _internalSource;
 
         private readonly string _switchName;
 
-        public bool EnableDefault { get; set; } = false;
+        public bool EnableDefault
+        {
+            [DebuggerStepThrough]
+            get;
+
+            [DebuggerStepThrough]
+            set;
+        }
 
         public override bool IsEnabled(
             string name)

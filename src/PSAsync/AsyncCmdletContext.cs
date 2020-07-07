@@ -214,8 +214,15 @@ namespace PSAsync
                 return Thread.CurrentThread.ManagedThreadId == this._mainThreadId;
             }
         }
-        
-        internal ShouldContinueContext ShouldContinueContext { get; set; }
+
+        internal ShouldContinueContext ShouldContinueContext
+        {
+            [DebuggerStepThrough]
+            get;
+
+            [DebuggerStepThrough]
+            set;
+        }
 
         public static AsyncCmdletContext GetContext<TCmdlet>(
             TCmdlet cmdlet)
