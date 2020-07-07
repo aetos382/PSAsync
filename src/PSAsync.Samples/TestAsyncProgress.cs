@@ -53,7 +53,7 @@ namespace PSAsync.Samples
                 "いろいろしています",
                 $"{this.ThreadCount} スレッドで処理中");
 
-            this
+            await this
                 .WriteProgressAsync(parentProgress)
                 .ConfigureAwait(false);
 
