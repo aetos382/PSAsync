@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace PSAsync
 {
+#pragma warning disable CA1001 // DiangnosticSource は破棄しなくても問題ない
+
     internal sealed class AsyncCmdletAccessor<TCmdlet>
         where TCmdlet :
             Cmdlet,
@@ -181,4 +183,6 @@ namespace PSAsync
             public const string EndProcessingAsyncActivity = "EndProcessingAsync";
         }
     }
+
+#pragma warning restore
 }
