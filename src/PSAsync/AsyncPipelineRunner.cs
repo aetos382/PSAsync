@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Management.Automation;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,6 +39,8 @@ namespace PSAsync
                         StageName = pipelineStage
                     });
             }
+
+            ExceptionDispatchInfo? exceptionDispatcher = null;
 
             using var context = AsyncCmdletContext.Start(cmdlet);
 
@@ -82,17 +86,34 @@ namespace PSAsync
                 catch (OperationCanceledException)
                 {
                 }
-
-                if (traceEnabled)
+                catch (AggregateException ex)
                 {
-                    diagnosticSource.StopActivity(
-                        pipelineStageActivity!,
-                        new
-                        {
-                            StageName = pipelineStage
-                        });
+                    var exceptions = ex.Flatten().InnerExceptions;
+
+                    var pse = exceptions.FirstOrDefault(e => e is PipelineStoppedException);
+                    if (pse != null)
+                    {
+                        exceptionDispatcher = ExceptionDispatchInfo.Capture(pse);
+                    }
+                    else if (exceptions.Any(e => !(e is OperationCanceledException)))
+                    {
+                        exceptionDispatcher = ExceptionDispatchInfo.Capture(ex);
+                    }
+                }
+                finally
+                {
+                    if (traceEnabled)
+                    {
+                        diagnosticSource.StopActivity(
+                            pipelineStageActivity!,
+                            new {
+                                StageName = pipelineStage
+                            });
+                    }
                 }
             }
+
+            exceptionDispatcher?.Throw();
         }
 
         private static class DiagnosticConstants
