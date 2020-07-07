@@ -191,14 +191,12 @@ namespace PSAsync
             {
                 task.ContinueWith(
                     t => {
-
                         this._diagnosticSource.StopActivity(
                             activity!,
                             new
                             {
                                 CmdletType = cmdletType
                             });
-
                     },
                     CancellationToken.None,
                     TaskContinuationOptions.ExecuteSynchronously,
