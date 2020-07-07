@@ -39,7 +39,7 @@ namespace PSAsync.Samples
         public async Task ProcessRecordAsync(
             CancellationToken cancellationToken)
         {
-            await Task.Delay(TimeSpan.FromSeconds(10));
+            await Task.Delay(TimeSpan.FromSeconds(3), cancellationToken);
         }
 
         #endregion
