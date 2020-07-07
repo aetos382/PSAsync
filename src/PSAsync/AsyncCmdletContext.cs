@@ -162,7 +162,7 @@ namespace PSAsync
             return new AwaitableAction<TCmdlet>(
                 cmdlet,
                 action,
-                state => ((CancellationTokenSource)state)!.Dispose(),
+                state => ((CancellationTokenSource?)state)!.Dispose(),
                 linkedTokenSource,
                 linkedTokenSource.Token);
         }
