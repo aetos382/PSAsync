@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace PSAsync
 {
-    internal static class AsyncMethodRunner
+    internal static class AsyncPipelineRunner
     {
-        public static void DoAsyncOperation<TCmdlet>(
+        public static void RunAsyncPipeline<TCmdlet>(
             TCmdlet cmdlet,
-            Func<TCmdlet, CancellationToken, Task> asyncMethod)
+            Func<TCmdlet, CancellationToken, Task> asyncMethod,
+            string pipelineStage)
             where TCmdlet :
                 Cmdlet,
                 IAsyncCmdlet
@@ -18,6 +19,24 @@ namespace PSAsync
             using var diagnosticSource = new SwitchingDiagnosticSource(
                 DiagnosticConstants.SourceName,
                 DiagnosticConstants.TraceSwitchName);
+
+            bool traceEnabled = diagnosticSource.IsSwitchEnabled;
+
+            Activity? pipelineStageActivity = null;
+
+            if (traceEnabled)
+            {
+                pipelineStageActivity =
+                    new Activity(DiagnosticConstants.AsyncPipelineStageActivity)
+                        .SetIdFormat(ActivityIdFormat.Hierarchical);
+
+                diagnosticSource.StartActivity(
+                    pipelineStageActivity,
+                    new
+                    {
+                        StageName = pipelineStage
+                    });
+            }
 
             using var context = AsyncCmdletContext.Start(cmdlet);
 
@@ -35,23 +54,22 @@ namespace PSAsync
 
                 foreach (var action in context.GetActions())
                 {
-                    Activity? activity = null;
-
-                    bool traceEnabled = diagnosticSource.IsSwitchEnabled;
+                    Activity? pipelineStepActivity = null;
 
                     if (traceEnabled)
                     {
-                        activity = new Activity(DiagnosticConstants.AsyncActionActivity)
-                            .SetIdFormat(ActivityIdFormat.Hierarchical);
+                        pipelineStepActivity =
+                            new Activity(DiagnosticConstants.AsyncPipelineStepActivity)
+                                .SetIdFormat(ActivityIdFormat.Hierarchical);
 
-                        diagnosticSource.StartActivity(activity, Unit.Instance);
+                        diagnosticSource.StartActivity(pipelineStepActivity);
                     }
 
                     action.Invoke();
 
                     if (traceEnabled)
                     {
-                        diagnosticSource.StopActivity(activity!, Unit.Instance);
+                        diagnosticSource.StopActivity(pipelineStepActivity!);
                     }
                 }
             }
@@ -64,6 +82,16 @@ namespace PSAsync
                 catch (OperationCanceledException)
                 {
                 }
+
+                if (traceEnabled)
+                {
+                    diagnosticSource.StopActivity(
+                        pipelineStageActivity!,
+                        new
+                        {
+                            StageName = pipelineStage
+                        });
+                }
             }
         }
 
@@ -73,7 +101,9 @@ namespace PSAsync
 
             public const string TraceSwitchName = SourceName + ".TraceEnabled";
 
-            public const string AsyncActionActivity = "AsyncAction";
+            public const string AsyncPipelineStageActivity = "AsyncPipelineStage";
+
+            public const string AsyncPipelineStepActivity = "AsyncPipelineStep";
         }
     }
 }

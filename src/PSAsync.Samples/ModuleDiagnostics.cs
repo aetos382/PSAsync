@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Management.Automation;
 using System.Threading;
@@ -43,7 +43,7 @@ namespace PSAsync.Samples
                             break;
 
                         case "PSAsync.AsyncMethodRunner":
-                            listener.SubscribeWithAdapter(new AsyncMethodRunnerListener());
+                            listener.SubscribeWithAdapter(new AsyncPipelineRunnerListener());
                             break;
 
                         case "PSAsync.PowerShellSynchronizationContext":
@@ -116,24 +116,44 @@ namespace PSAsync.Samples
             }
         }
 
-        private class AsyncMethodRunnerListener
+        private class AsyncPipelineRunnerListener
         {
-            [DiagnosticName("AsyncAction.Start")]
-            private void OnStartAsyncAction()
+            [DiagnosticName("AsyncPipelineStage.Start")]
+            private void OnStartAsyncPipelineStage(
+                string stageName)
             {
                 var activity = Activity.Current;
                 int threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncMethodRunner.AsyncAction.Start(threadId: {threadId}, id: {activity.Id})");
+                Console.WriteLine($"AsyncPipelineRunner.AsyncPipelineStage.Start(stageName: {stageName}, threadId: {threadId}, id: {activity.Id})");
             }
 
-            [DiagnosticName("AsyncAction.Stop")]
-            private void OnStopAsyncAction()
+            [DiagnosticName("AsyncPipelineStage.Stop")]
+            private void OnStopAsyncPipelineStage(
+                string stageName)
             {
                 var activity = Activity.Current;
                 int threadId = Thread.CurrentThread.ManagedThreadId;
 
-                Console.WriteLine($"AsyncMethodRunner.AsyncAction.Stop(threadId: {threadId}, id: {activity.Id}, duration: {activity.Duration})");
+                Console.WriteLine($"AsyncPipelineRunner.AsyncPipelineStage.Stop(stageName: {stageName}, threadId: {threadId}, id: {activity.Id}, duration: {activity.Duration})");
+            }
+
+            [DiagnosticName("AsyncPipelineStep.Start")]
+            private void OnStartAsyncPipelineStep()
+            {
+                var activity = Activity.Current;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
+
+                Console.WriteLine($"AsyncPipelineRunner.AsyncPipelineStep.Start(threadId: {threadId}, id: {activity.Id})");
+            }
+
+            [DiagnosticName("AsyncPipelineStep.Stop")]
+            private void OnStopAsyncPipelineStep()
+            {
+                var activity = Activity.Current;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
+
+                Console.WriteLine($"AsyncPipelineRunner.AsyncPipelineStep.Stop(threadId: {threadId}, id: {activity.Id}, duration: {activity.Duration})");
             }
         }
 

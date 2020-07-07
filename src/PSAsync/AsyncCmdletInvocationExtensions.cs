@@ -19,7 +19,10 @@ namespace PSAsync
                 return;
             }
 
-            AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoBeginProcessingAsync);
+            AsyncPipelineRunner.RunAsyncPipeline(
+                cmdlet,
+                accessor.DoBeginProcessingAsync,
+                nameof(IAsyncCmdlet.BeginProcessingAsync));
         }
 
         public static void DoProcessRecordAsync<TCmdlet>(
@@ -37,7 +40,10 @@ namespace PSAsync
                 return;
             }
 
-            AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoProcessRecordAsync);
+            AsyncPipelineRunner.RunAsyncPipeline(
+                cmdlet,
+                accessor.DoProcessRecordAsync,
+                nameof(IAsyncCmdlet.ProcessRecordAsync));
         }
 
         public static void DoEndProcessingAsync<TCmdlet>(
@@ -55,7 +61,10 @@ namespace PSAsync
                 return;
             }
 
-            AsyncMethodRunner.DoAsyncOperation(cmdlet, accessor.DoEndProcessingAsync);
+            AsyncPipelineRunner.RunAsyncPipeline(
+                cmdlet,
+                accessor.DoEndProcessingAsync,
+                nameof(IAsyncCmdlet.EndProcessingAsync));
         }
 
         public static void CancelAsyncOperation<TCmdlet>(
