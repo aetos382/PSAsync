@@ -17,6 +17,8 @@
     <EnableSourceLink Condition="'$(EnableSourceLink)' != 'true'">false</EnableSourceLink>
     <DeterministicSourcePaths Condition="'$(EnableSourceLink)' != 'true'">false</DeterministicSourcePaths>
     <RestoreLockedMode>$(ContinuousIntegrationBuild)</RestoreLockedMode>
+
+    <!-- https://github.com/NuGet/Home/issues/7921#issuecomment-478152479 -->
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
   </PropertyGroup>
 
