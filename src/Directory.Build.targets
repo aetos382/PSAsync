@@ -30,8 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="*.sarif" />
     <None Remove="packages.lock.json" />
+    <None Remove="*.sarif" />
+    <None Remove="*.log" />
   </ItemGroup>
 
   <ItemGroup>
