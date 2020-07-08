@@ -17,6 +17,7 @@
     <EnableSourceLink Condition="'$(EnableSourceLink)' != 'true'">false</EnableSourceLink>
     <DeterministicSourcePaths Condition="'$(EnableSourceLink)' != 'true'">false</DeterministicSourcePaths>
     <RestoreLockedMode>$(ContinuousIntegrationBuild)</RestoreLockedMode>
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
   </PropertyGroup>
 
   <PropertyGroup>
