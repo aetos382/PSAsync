@@ -14,17 +14,19 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <EnableSourceLink Condition="'$(EnableSourceLink)' != 'true'">false</EnableSourceLink>
-    <DeterministicSourcePaths Condition="'$(EnableSourceLink)' != 'true'">false</DeterministicSourcePaths>
-    <RestoreLockedMode>$(ContinuousIntegrationBuild)</RestoreLockedMode>
+    <SolutionDirectory>$(MSBuildThisFileDirectory)</SolutionDirectory>
 
     <!-- https://github.com/NuGet/Home/issues/7921#issuecomment-478152479 -->
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-  </PropertyGroup>
+    <RestoreLockedMode>$(ContinuousIntegrationBuild)</RestoreLockedMode>
 
-  <PropertyGroup>
     <RepositoryRootDirectory>$(MSBuildThisFileDirectory)..</RepositoryRootDirectory>
     <CommonSourceDirectory>$(MSBuildThisFileDirectory)\Common</CommonSourceDirectory>
+    <EnableSourceLink Condition="'$(EnableSourceLink)' != 'true'">false</EnableSourceLink>
+    <DeterministicSourcePaths Condition="'$(EnableSourceLink)' != 'true'">false</DeterministicSourcePaths>
+    <ErrorLog Condition="'$(ErrorLog)' == ''">$(MSBuildProjectName).sarif</ErrorLog>
+
+    <PackageOutputPath Condition="'$(PackageOutputPath)' == ''">$(SolutionDirectory)\builtPackages</PackageOutputPath>
   </PropertyGroup>
 
 </Project>

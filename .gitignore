@@ -4,5 +4,7 @@ obj/
 
 *.user
 *.log
+*.sarif
+*.nupkg
 
 launchSettings.json
