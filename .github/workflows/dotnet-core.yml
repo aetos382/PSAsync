@@ -28,5 +28,5 @@ jobs:
       run: dotnet test --configuration Release --no-restore --no-build src/PSAsync.sln
     - name: Publish
       run: |
-        sed "s/{GITHUB_TOKEN}/${{ secret.GITHB_TOKEN }}/" .github/workflows/nuget.config > src/nuget.config
+        sed "s/{GITHUB_TOKEN}/${{ secrets.GITHB_TOKEN }}/" .github/workflows/nuget.config > src/nuget.config
         dotnet nuget push --source github --api-key ${{ secrets.GITHUB_TOKEN }} --force-english-output src/builtPackages/*.nupkg
