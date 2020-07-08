@@ -21,10 +21,10 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore /p:ContinuousIntegrationBuild=true src/PSAsync.sln
+      run: dotnet restore --source https://api.nuget.org/v3/index.json --source https://dotnet.myget.org/F/roslyn-analyzers/api/v3/index.json /p:ContinuousIntegrationBuild=true src/PSAsync.sln
     - name: Build
       run: dotnet build --configuration Release --no-restore /p:ContinuousIntegrationBuild=true src/PSAsync.sln
     - name: Test
       run: dotnet test --configuration Release --no-restore --no-build src/PSAsync.sln
     - name: Publish
-      run: dotnet nuget push --source github --api-key ${{ secrets.GITHUB_TOKEN }} --force-english-output
+      run: dotnet nuget push --source https://nuget.pkg.github.com/aetos382/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --force-english-output
