@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 
+using Microsoft;
+
 namespace PSAsync
 {
     internal static class DiagnosticSourceExtensions
@@ -8,7 +10,7 @@ namespace PSAsync
             this DiagnosticSource diagnosticSource,
             string name)
         {
-            Requires.ArgumentNotNull(diagnosticSource, nameof(diagnosticSource));
+            Requires.NotNull(diagnosticSource, nameof(diagnosticSource));
 
             diagnosticSource.Write(name, Unit.Instance);
         }
@@ -17,8 +19,8 @@ namespace PSAsync
             this DiagnosticSource diagnosticSource,
             Activity activity)
         {
-            Requires.ArgumentNotNull(diagnosticSource, nameof(diagnosticSource));
-            Requires.ArgumentNotNull(activity, nameof(activity));
+            Requires.NotNull(diagnosticSource, nameof(diagnosticSource));
+            Requires.NotNull(activity, nameof(activity));
 
             return diagnosticSource.StartActivity(activity, Unit.Instance);
         }
@@ -27,8 +29,8 @@ namespace PSAsync
             this DiagnosticSource diagnosticSource,
             Activity activity)
         {
-            Requires.ArgumentNotNull(diagnosticSource, nameof(diagnosticSource));
-            Requires.ArgumentNotNull(activity, nameof(activity));
+            Requires.NotNull(diagnosticSource, nameof(diagnosticSource));
+            Requires.NotNull(activity, nameof(activity));
 
             diagnosticSource.StopActivity(activity, Unit.Instance);
         }

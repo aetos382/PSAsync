@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Threading;
 
+using Microsoft;
+
 namespace PSAsync
 {
     internal sealed class PowerShellSynchronizationContext :
@@ -9,7 +11,7 @@ namespace PSAsync
         public PowerShellSynchronizationContext(
             IActionConsumer queue)
         {
-            Requires.ArgumentNotNull(queue, nameof(queue));
+            Requires.NotNull(queue, nameof(queue));
 
             this._queue = queue;
         }
@@ -20,7 +22,7 @@ namespace PSAsync
             SendOrPostCallback d,
             object? state)
         {
-            Requires.ArgumentNotNull(d, nameof(d));
+            Requires.NotNull(d, nameof(d));
 
             this._queue.QueueAction(new Callback(d, state));
 

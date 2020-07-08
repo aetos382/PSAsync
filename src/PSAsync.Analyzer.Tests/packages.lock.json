@@ -49,6 +49,18 @@
           "Microsoft.CodeAnalysis.Testing.Verifiers.XUnit": "1.0.1-beta1.20351.1"
         }
       },
+      "Microsoft.CodeAnalysis.FxCopAnalyzers": {
+        "type": "Direct",
+        "requested": "[3.0.0, )",
+        "resolved": "3.0.0",
+        "contentHash": "ea8bbNa4fzS/s55AUCAvYjb6Y3lFysFVfEwt9zIwR/NeFpOcUluIleOXSUPAyUtwBFugn01aWvNfMVmIwnvgqQ==",
+        "dependencies": {
+          "Microsoft.CodeAnalysis.VersionCheckAnalyzer": "[3.0.0]",
+          "Microsoft.CodeQuality.Analyzers": "[3.0.0]",
+          "Microsoft.NetCore.Analyzers": "[3.0.0]",
+          "Microsoft.NetFramework.Analyzers": "[3.0.0]"
+        }
+      },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
         "requested": "[16.6.1, )",
@@ -58,6 +70,12 @@
           "Microsoft.CodeCoverage": "16.6.1",
           "Microsoft.TestPlatform.TestHost": "16.6.1"
         }
+      },
+      "Microsoft.VisualStudio.Validation": {
+        "type": "Direct",
+        "requested": "[15.5.31, )",
+        "resolved": "15.5.31",
+        "contentHash": "AOmvJTT4CpamJ2A6J+PBrhKPfs2HXi/MJVxN/QlViewjI4XZDrt/yp3NMto+OOgB25jDnt9IIdNTkjpNBUpXmw=="
       },
       "xunit": {
         "type": "Direct",
@@ -219,6 +237,11 @@
           "xunit.assert": "2.3.0"
         }
       },
+      "Microsoft.CodeAnalysis.VersionCheckAnalyzer": {
+        "type": "Transitive",
+        "resolved": "3.0.0",
+        "contentHash": "RL9OdvWLhtQXcvxK2EPbXM9LandLcDG14Ndz5baVH2aiyvEB11VrHfrzLNoEE5B2/zhRGqN+BHsBg21f75wG9g=="
+      },
       "Microsoft.CodeAnalysis.VisualBasic": {
         "type": "Transitive",
         "resolved": "1.3.0",
@@ -242,6 +265,11 @@
         "resolved": "16.6.1",
         "contentHash": "nBYXDgAZCfjsOVzlhMB5olGvX4dTDWB/gWaYS/MhgXBcCz8XJuVGqkfK8LmwlBR/eeUPE9Q/NFZNwlJyMZf0vg=="
       },
+      "Microsoft.CodeQuality.Analyzers": {
+        "type": "Transitive",
+        "resolved": "3.0.0",
+        "contentHash": "pOROTgdPa+15sYfEMvDlWlDEedCO1SuRLrRjX36Ltli3SmhZawC2Vgws4crz1XMs9WRzBo8WIJM5WRzGNsOSmQ=="
+      },
       "Microsoft.CSharp": {
         "type": "Transitive",
         "resolved": "4.0.1",
@@ -264,6 +292,11 @@
           "System.Runtime.InteropServices": "4.1.0",
           "System.Threading": "4.0.11"
         }
+      },
+      "Microsoft.NetCore.Analyzers": {
+        "type": "Transitive",
+        "resolved": "3.0.0",
+        "contentHash": "JdjhkobYjmQAu4JpsEALDAr7xig2pzXMsXGilHJ2gvmUaUSBjYObw53CBaIkRXmPu0DaDPN8ze9LCtsRd1R8UA=="
       },
       "Microsoft.NETCore.App": {
         "type": "Transitive",
@@ -366,6 +399,11 @@
         "resolved": "1.0.1",
         "contentHash": "SaToCvvsGMxTgtLv/BrFQ5IFMPRE1zpWbnqbpwykJa8W5XiX82CXI6K2o7yf5xS7EP6t/JzFLV0SIDuWpvBZVw=="
       },
+      "Microsoft.NetFramework.Analyzers": {
+        "type": "Transitive",
+        "resolved": "3.0.0",
+        "contentHash": "Q0sB3JYld9JMa9/HKtioIxhqmOohEku1FkfSC/uf0usGcCIhm6GYWU565klP64jC2kzmjFIu/6fkHEIYRqZCQQ=="
+      },
       "Microsoft.TestPlatform.ObjectModel": {
         "type": "Transitive",
         "resolved": "16.6.1",
@@ -420,11 +458,6 @@
           "System.Runtime.Loader": "4.3.0",
           "System.Threading.Tasks.Dataflow": "4.6.0"
         }
-      },
-      "Microsoft.VisualStudio.Validation": {
-        "type": "Transitive",
-        "resolved": "15.0.82",
-        "contentHash": "XwZyVCsHuEtnd6nYScJnA8XkXPzy4Ok0DV5/hqqAe5ccgOhJ6yap7Qh/sU/i6QxEzuYyECPYDQ7IOyEQ3yRQgQ=="
       },
       "Microsoft.Win32.Primitives": {
         "type": "Transitive",
@@ -2033,7 +2066,8 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.CodeAnalysis.Analyzers": "3.0.0",
-          "Microsoft.CodeAnalysis.CSharp.Workspaces": "3.6.0"
+          "Microsoft.CodeAnalysis.CSharp.Workspaces": "3.6.0",
+          "Microsoft.VisualStudio.Validation": "15.5.31"
         }
       }
     }

@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft;
+
 namespace PSAsync
 {
     public static class AsyncCmdletOutputExtensions
@@ -15,7 +17,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -36,7 +38,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -57,7 +59,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -78,7 +80,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -99,7 +101,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -121,7 +123,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -142,7 +144,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -163,7 +165,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -185,7 +187,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -208,7 +210,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -235,7 +237,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             cancellationToken.ThrowIfCancellationRequested();
 

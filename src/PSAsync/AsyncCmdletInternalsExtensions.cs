@@ -3,6 +3,8 @@ using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft;
+
 namespace PSAsync
 {
     public static class AsyncCmdletInternalsExtensions
@@ -17,8 +19,8 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
-            Requires.ArgumentNotNull(action, nameof(action));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(action, nameof(action));
 
             var context = AsyncCmdletContext.GetContext(cmdlet);
 
@@ -42,8 +44,8 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
-            Requires.ArgumentNotNull(action, nameof(action));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(action, nameof(action));
 
             return QueueAction(
                 cmdlet,
@@ -63,8 +65,8 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
-            Requires.ArgumentNotNull(action, nameof(action));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(action, nameof(action));
 
             return QueueAction(
                 cmdlet,
@@ -87,8 +89,8 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
-            Requires.ArgumentNotNull(action, nameof(action));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(action, nameof(action));
 
             return QueueAction(
                 cmdlet,

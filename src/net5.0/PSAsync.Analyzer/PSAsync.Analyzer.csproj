@@ -12,11 +12,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.0.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.6.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" />
+    <PackageReference Include="Microsoft.VisualStudio.Validation" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(ProjectSourceDirectory)\**\*.cs" Exclude="$(ProjectSourceDirectory)\Resources.Designer.cs" />
-    <Compile Include="$(CommonSourceDirectory)\*.cs" />
 
     <!--
       $(ProjectSourceDirectory)\Resources.resx を普通に追加しても、ResXFileCodeGenerator でコードが生成されない。

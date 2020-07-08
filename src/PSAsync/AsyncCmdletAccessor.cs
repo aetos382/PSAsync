@@ -9,6 +9,8 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft;
+
 namespace PSAsync
 {
 #pragma warning disable CA1001 // DiangnosticSource は破棄しなくても問題ない
@@ -88,7 +90,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             return this.InvokeWithTraceActivity(
                 DiagnosticConstants.BeginProcessingAsyncActivity,
@@ -104,7 +106,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             return this.InvokeWithTraceActivity(
                 DiagnosticConstants.ProcessRecordAsyncActivity,
@@ -120,7 +122,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             return this.InvokeWithTraceActivity(
                 DiagnosticConstants.EndProcessingAsyncActivity,
@@ -212,7 +214,7 @@ namespace PSAsync
         public static AsyncCmdletAccessor GetAccessor(
             Type cmdletType)
         {
-            Requires.ArgumentNotNull(cmdletType, nameof(cmdletType));
+            Requires.NotNull(cmdletType, nameof(cmdletType));
 
             if (!_accessors.TryGetValue(cmdletType, out var accessor))
             {

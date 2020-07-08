@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 
+using Microsoft;
+
 namespace PSAsync
 {
     internal class ActivityScope :
@@ -11,8 +13,8 @@ namespace PSAsync
             Activity activity,
             object? args)
         {
-            Requires.ArgumentNotNull(diagnosticSource, nameof(diagnosticSource));
-            Requires.ArgumentNotNull(activity, nameof(activity));
+            Requires.NotNull(diagnosticSource, nameof(diagnosticSource));
+            Requires.NotNull(activity, nameof(activity));
 
             this._diagnosticSource = diagnosticSource;
             this._activity = activity;

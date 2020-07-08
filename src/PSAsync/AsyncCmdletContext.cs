@@ -8,6 +8,8 @@ using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft;
+
 namespace PSAsync
 {
     internal class AsyncCmdletContext :
@@ -32,7 +34,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             var context = new AsyncCmdletContext(cmdlet);
             return context;
@@ -136,8 +138,8 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
-            Requires.ArgumentNotNull(action, nameof(action));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(action, nameof(action));
 
             this.CheckDisposed();
 
@@ -156,7 +158,7 @@ namespace PSAsync
         public void QueueAction(
             IAction action)
         {
-            Requires.ArgumentNotNull(action, nameof(action));
+            Requires.NotNull(action, nameof(action));
 
             this.CheckDisposed();
 
@@ -177,8 +179,8 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
-            Requires.ArgumentNotNull(action, nameof(action));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(action, nameof(action));
 
             this.CheckDisposed();
 
@@ -264,7 +266,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             if (!TryGetContext(cmdlet, out var context))
             {
@@ -282,7 +284,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             context = null!;
 

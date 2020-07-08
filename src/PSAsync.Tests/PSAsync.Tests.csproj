@@ -13,6 +13,7 @@
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="coverlet.collector" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" />
+    <PackageReference Include="Microsoft.VisualStudio.Validation" />
   </ItemGroup>
 
   <ItemGroup>

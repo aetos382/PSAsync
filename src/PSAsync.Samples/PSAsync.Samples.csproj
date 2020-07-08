@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.PowerShell.SDK" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" />
+    <PackageReference Include="Microsoft.VisualStudio.Validation" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">

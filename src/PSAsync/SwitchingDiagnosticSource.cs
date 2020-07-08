@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 
+using Microsoft;
+
 namespace PSAsync
 {
     internal class SwitchingDiagnosticSource :
@@ -11,8 +13,8 @@ namespace PSAsync
             string sourceName,
             string switchName)
         {
-            Requires.ArgumentNotNull(sourceName, nameof(sourceName));
-            Requires.ArgumentNotNull(switchName, nameof(switchName));
+            Requires.NotNull(sourceName, nameof(sourceName));
+            Requires.NotNull(switchName, nameof(switchName));
 
             this._internalSource = new DiagnosticListener(sourceName);
             this._switchName = switchName;
@@ -41,7 +43,7 @@ namespace PSAsync
         public override bool IsEnabled(
             string name)
         {
-            Requires.ArgumentNotNull(name, nameof(name));
+            Requires.NotNull(name, nameof(name));
 
             if (!this.IsSwitchEnabled)
             {
@@ -56,7 +58,7 @@ namespace PSAsync
             object arg1,
             object? arg2 = null)
         {
-            Requires.ArgumentNotNull(name, nameof(name));
+            Requires.NotNull(name, nameof(name));
 
             if (!this.IsSwitchEnabled)
             {
@@ -70,7 +72,7 @@ namespace PSAsync
             string name,
             object value)
         {
-            Requires.ArgumentNotNull(name, nameof(name));
+            Requires.NotNull(name, nameof(name));
 
             if (this.IsEnabled(name))
             {

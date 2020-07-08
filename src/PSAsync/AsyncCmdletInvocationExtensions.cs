@@ -1,5 +1,7 @@
 ﻿using System.Management.Automation;
 
+using Microsoft;
+
 namespace PSAsync
 {
     public static class AsyncCmdletInvocationExtensions
@@ -10,7 +12,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             var accessor = AsyncCmdletAccessor.GetAccessor(cmdlet.GetType());
 
@@ -31,7 +33,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             var accessor = AsyncCmdletAccessor.GetAccessor(cmdlet.GetType());
 
@@ -52,7 +54,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             var accessor = AsyncCmdletAccessor.GetAccessor(cmdlet.GetType());
 
@@ -73,7 +75,7 @@ namespace PSAsync
                 Cmdlet,
                 IAsyncCmdlet
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
 
             if (AsyncCmdletContext.TryGetContext(cmdlet, out var context))
             {

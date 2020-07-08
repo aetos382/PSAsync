@@ -3,6 +3,8 @@ using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft;
+
 namespace PSAsync
 {
     internal class AwaitableAction<TCmdlet, TArgument, TResult> :
@@ -19,8 +21,8 @@ namespace PSAsync
             object? postActionState = null,
             CancellationToken cancellationToken = default)
         {
-            Requires.ArgumentNotNull(cmdlet, nameof(cmdlet));
-            Requires.ArgumentNotNull(action, nameof(action));
+            Requires.NotNull(cmdlet, nameof(cmdlet));
+            Requires.NotNull(action, nameof(action));
 
             this._cmdlet = cmdlet;
             this._action = action;

@@ -7,21 +7,31 @@
     <DebugType>embedded</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <IsPackable>false</IsPackable>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" />
     <PackageReference Include="Microsoft.PowerShell.SDK" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" />
+    <PackageReference Include="Microsoft.VisualStudio.Validation" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <PackageReference Include="System.Reactive" Version="4.4.1">
+      <PrivaeAssets>all</PrivaeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" Version="3.1.5">
+      <PrivaeAssets>all</PrivaeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PSAsync.Analyzer\PSAsync.Analyzer.csproj" />
     <ProjectReference Include="..\PSAsync\PSAsync.csproj" />
+    <ProjectReference Include="..\PSAsync.Analyzer\PSAsync.Analyzer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(ProjectSourceDirectory)\**\*.cs"/>
-    <Compile Include="$(CommonSourceDirectory)\*.cs" />
   </ItemGroup>
 
   <ItemGroup>

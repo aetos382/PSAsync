@@ -13,11 +13,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.PowerShell.SDK" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" />
+    <PackageReference Include="Microsoft.VisualStudio.Validation" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="$(CommonSourceDirectory)\*.cs" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 
+using Microsoft;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -29,6 +30,8 @@ namespace PSAsync.Analyzer
 
         public override void Initialize(AnalysisContext context)
         {
+            Requires.NotNull(context, nameof(context));
+
             // TODO: Consider registering other actions that act on syntax instead of or in addition to symbols
             // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Analyzer%20Actions%20Semantics.md for more information
             context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.NamedType);

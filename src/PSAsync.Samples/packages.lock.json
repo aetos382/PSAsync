@@ -51,6 +51,12 @@
           "System.Text.Encodings.Web": "4.7.1"
         }
       },
+      "Microsoft.VisualStudio.Validation": {
+        "type": "Direct",
+        "requested": "[15.5.31, )",
+        "resolved": "15.5.31",
+        "contentHash": "AOmvJTT4CpamJ2A6J+PBrhKPfs2HXi/MJVxN/QlViewjI4XZDrt/yp3NMto+OOgB25jDnt9IIdNTkjpNBUpXmw=="
+      },
       "System.Reactive": {
         "type": "Direct",
         "requested": "[4.4.1, )",
@@ -1203,13 +1209,17 @@
         }
       },
       "psasync": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.VisualStudio.Validation": "15.5.31"
+        }
       },
       "psasync.analyzer": {
         "type": "Project",
         "dependencies": {
           "Microsoft.CodeAnalysis.Analyzers": "3.0.0",
-          "Microsoft.CodeAnalysis.CSharp.Workspaces": "3.6.0"
+          "Microsoft.CodeAnalysis.CSharp.Workspaces": "3.6.0",
+          "Microsoft.VisualStudio.Validation": "15.5.31"
         }
       }
     }

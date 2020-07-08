@@ -8,6 +8,7 @@
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Update="Microsoft.VisualStudio.Validation" Version="15.5.31" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Update="xunit" Version="2.4.1" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2">
@@ -26,6 +27,11 @@
 
   <ItemGroup Condition="'$(EnableSourceLink)' != 'true'">
     <PackageReference Remove="Microsoft.SourceLink.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="*.sarif" />
+    <None Remove="packages.lock.json" />
   </ItemGroup>
 
   <ItemGroup>
