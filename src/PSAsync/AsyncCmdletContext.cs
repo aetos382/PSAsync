@@ -244,6 +244,9 @@ namespace PSAsync
             }
         }
 
+        // https://github.com/dotnet/roslyn-analyzers/issues/2834
+        #pragma warning disable CA1822
+
         internal ShouldContinueContext ShouldContinueContext
         {
             [DebuggerStepThrough]
@@ -252,6 +255,8 @@ namespace PSAsync
             [DebuggerStepThrough]
             set;
         }
+
+        #pragma warning restore CA1822 
 
         public static AsyncCmdletContext GetContext<TCmdlet>(
             TCmdlet cmdlet)

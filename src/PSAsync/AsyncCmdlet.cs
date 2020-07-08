@@ -12,25 +12,25 @@ namespace PSAsync
         {
         }
 
-        /// <inheritdoc cref="Cmdlet.BeginProcessing"/>
+        /// <inheritdoc />
         protected override void BeginProcessing()
         {
             this.DoBeginProcessingAsync();
         }
 
-        /// <inheritdoc cref="Cmdlet.ProcessRecord"/>
+        /// <inheritdoc />
         protected override void ProcessRecord()
         {
             this.DoProcessRecordAsync();
         }
 
-        /// <inheritdoc cref="Cmdlet.EndProcessing"/>
+        /// <inheritdoc />
         protected override void EndProcessing()
         {
             this.DoEndProcessingAsync();
         }
 
-        /// <inheritdoc cref="Cmdlet.StopProcessing"/>
+        /// <inheritdoc />
         protected override void StopProcessing()
         {
             this.CancelAsyncOperation();

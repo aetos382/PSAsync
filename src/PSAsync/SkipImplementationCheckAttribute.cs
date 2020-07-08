@@ -14,6 +14,9 @@ namespace PSAsync
             this.Skip = true;
         }
 
+        // https://github.com/dotnet/roslyn-analyzers/issues/2834
+        #pragma warning disable CA1822
+
         public bool Skip
         {
             [DebuggerStepThrough]
@@ -22,5 +25,7 @@ namespace PSAsync
             [DebuggerStepThrough]
             set;
         }
+
+        #pragma warning restore CA1822
     }
 }

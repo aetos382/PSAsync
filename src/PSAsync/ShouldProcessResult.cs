@@ -1,9 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Management.Automation;
 
 namespace PSAsync
 {
-    public readonly struct ShouldProcessResult
+    public readonly struct ShouldProcessResult :
+        IEquatable<ShouldProcessResult>
     {
         public ShouldProcessResult(
             bool result,
@@ -12,6 +14,9 @@ namespace PSAsync
             this.Result = result;
             this.Reason = reason;
         }
+
+        // https://github.com/dotnet/roslyn-analyzers/issues/2834
+        #pragma warning disable CA1822
 
         public bool Result
         {
@@ -25,6 +30,8 @@ namespace PSAsync
             get;
         }
 
+        #pragma warning restore CA1822
+
         public void Deconstruct(
             out bool result,
             out ShouldProcessReason reason)
@@ -33,10 +40,39 @@ namespace PSAsync
             reason = this.Reason;
         }
 
-        public static implicit operator bool(
-            ShouldProcessResult result)
+        public bool Equals(
+            ShouldProcessResult other)
         {
-            return result.Result;
+            return
+                this.Result == other.Result &&
+                this.Reason == other.Reason;
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(
+            object? obj)
+        {
+            return (obj is ShouldProcessResult other) && Equals(other);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.Result, (int) this.Reason);
+        }
+
+        public static bool operator ==(
+            ShouldProcessResult left,
+            ShouldProcessResult right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(
+            ShouldProcessResult left,
+            ShouldProcessResult right)
+        {
+            return !(left == right);
         }
     }
 }

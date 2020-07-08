@@ -24,6 +24,9 @@ namespace PSAsync
 
         private readonly string _switchName;
 
+        // https://github.com/dotnet/roslyn-analyzers/issues/2834
+        #pragma warning disable CA1822
+
         public bool EnableDefault
         {
             [DebuggerStepThrough]
@@ -32,6 +35,8 @@ namespace PSAsync
             [DebuggerStepThrough]
             set;
         }
+
+        #pragma warning restore CA1822
 
         public override bool IsEnabled(
             string name)
