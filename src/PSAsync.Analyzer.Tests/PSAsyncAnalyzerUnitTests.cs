@@ -11,7 +11,7 @@ namespace PSAsync.Analyzer.Test
     public class UnitTest
     {
         //No diagnostics expected to show up
-        [Fact]
+        // [Fact]
         public async Task TestMethod1()
         {
             var test = @"";
@@ -20,7 +20,7 @@ namespace PSAsync.Analyzer.Test
         }
 
         //Diagnostic and CodeFix both triggered and checked for
-        [Fact]
+        // [Fact]
         public async Task TestMethod2()
         {
             var test = @"
