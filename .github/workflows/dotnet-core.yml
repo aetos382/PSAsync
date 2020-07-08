@@ -26,7 +26,3 @@ jobs:
       run: dotnet build --configuration Release --no-restore /p:ContinuousIntegrationBuild=true src/PSAsync.sln
     - name: Test
       run: dotnet test --configuration Release --no-restore --no-build src/PSAsync.sln
-    - name: Configure nuget
-      run: sed "s/{GITHUB_TOKEN}/${{ secrets.GITHB_TOKEN }}/" .github/workflows/nuget.config > src/nuget.config
-    - name: Publish
-      run: dotnet nuget push --source https://nuget.pkg.github.com/aetos382/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --force-english-output src/builtPackages/*.nupkg
