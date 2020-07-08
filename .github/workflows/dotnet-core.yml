@@ -27,4 +27,4 @@ jobs:
     - name: Test
       run: dotnet test --configuration Release --no-restore --no-build src/PSAsync.sln
     - name: Publish
-      run: dotnet nuget push --source https://nuget.pkg.github.com/aetos382/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --force-english-output builtPackages\*.nupkg
+      run: dotnet nuget push --source https://nuget.pkg.github.com/aetos382/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --force-english-output builtPackages/*.nupkg
