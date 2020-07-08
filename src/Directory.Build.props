@@ -14,6 +14,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <EnableSourceLink Condition="'$(EnableSourceLink)' != 'true'">false</EnableSourceLink>
+    <DeterministicSourcePaths Condition="'$(EnableSourceLink)' != 'true'">false</DeterministicSourcePaths>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <RepositoryRootDirectory>$(MSBuildThisFileDirectory)..</RepositoryRootDirectory>
     <CommonSourceDirectory>$(MSBuildThisFileDirectory)\Common</CommonSourceDirectory>
   </PropertyGroup>

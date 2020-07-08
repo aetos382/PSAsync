@@ -18,6 +18,16 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(EnableSourceLink)' == 'true'">
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(EnableSourceLink)' != 'true'">
+    <PackageReference Remove="Microsoft.SourceLink.*" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Include="$(RepositoryRootDirectory)\LICENSE.txt">
       <Pack>True</Pack>
