@@ -1,0 +1,3 @@
+[*.cs]
+dotnet_diagnostic.CA1062.severity = error
+dotnet_code_quality.null_check_validation_method = M:Microsoft.Requires.NotNull``1(``0,System.String)

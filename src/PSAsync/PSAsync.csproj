@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.PowerShell.SDK" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" />
     <PackageReference Include="Microsoft.VisualStudio.Validation" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" />
   </ItemGroup>

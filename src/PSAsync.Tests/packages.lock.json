@@ -94,6 +94,11 @@
           "System.Diagnostics.DiagnosticSource": "4.6.0"
         }
       },
+      "Microsoft.Bcl.AsyncInterfaces": {
+        "type": "Transitive",
+        "resolved": "1.0.0",
+        "contentHash": "K63Y4hORbBcKLWH5wnKgzyn7TOfYzevIEwIedQHBIkmkEBA9SCqgvom+XTuE+fAFGvINGkhFItaZ2dvMGdT5iw=="
+      },
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Transitive",
         "resolved": "2.9.6",
@@ -295,6 +300,23 @@
           "Microsoft.TestPlatform.ObjectModel": "16.6.1",
           "Newtonsoft.Json": "9.0.1"
         }
+      },
+      "Microsoft.VisualStudio.Threading": {
+        "type": "Transitive",
+        "resolved": "16.6.13",
+        "contentHash": "ynLycUJgzZggW5P0C2w9waGCU1Oc44ulHYl1EwNx2GAA0QgTOztic2zHUzp4P714hyYi15ycOjT+i2MnszPXAg==",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "1.0.0",
+          "Microsoft.VisualStudio.Threading.Analyzers": "16.6.13",
+          "Microsoft.VisualStudio.Validation": "15.5.31",
+          "Microsoft.Win32.Registry": "4.6.0",
+          "System.Threading.Tasks.Extensions": "4.5.3"
+        }
+      },
+      "Microsoft.VisualStudio.Threading.Analyzers": {
+        "type": "Transitive",
+        "resolved": "16.6.13",
+        "contentHash": "4wSnz/hICllmINuh2ZatZZWXHnaMf2ha8cP6ts7mCM6pE0ZDIejGMCEQubjZuRmfQ7zP8L6Uvmf0zk2+OL0USg=="
       },
       "Microsoft.Win32.Primitives": {
         "type": "Transitive",
@@ -1761,6 +1783,7 @@
       "psasync": {
         "type": "Project",
         "dependencies": {
+          "Microsoft.VisualStudio.Threading": "16.6.13",
           "Microsoft.VisualStudio.Validation": "15.5.31"
         }
       }
