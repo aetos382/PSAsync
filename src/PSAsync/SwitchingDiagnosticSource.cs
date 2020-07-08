@@ -49,7 +49,7 @@ namespace PSAsync
         public override bool IsEnabled(
             string name,
             object arg1,
-            object arg2 = null)
+            object? arg2 = null)
         {
             Requires.ArgumentNotNull(name, nameof(name));
 
