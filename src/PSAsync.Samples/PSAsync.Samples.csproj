@@ -26,7 +26,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PSAsync\PSAsync.csproj" />
-    <ProjectReference Include="..\PSAsync.Analyzer\PSAsync.Analyzer.csproj" />
+    <ProjectReference Include="..\PSAsync.Analyzer\PSAsync.Analyzer.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Analyzer</OutputItemType>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>
