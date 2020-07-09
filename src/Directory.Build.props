@@ -18,7 +18,6 @@
 
     <!-- https://github.com/NuGet/Home/issues/7921#issuecomment-478152479 -->
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-    <RestoreLockedMode>$(ContinuousIntegrationBuild)</RestoreLockedMode>
 
     <RepositoryRootDirectory>$(MSBuildThisFileDirectory)..</RepositoryRootDirectory>
     <CommonSourceDirectory>$(MSBuildThisFileDirectory)\Common</CommonSourceDirectory>
