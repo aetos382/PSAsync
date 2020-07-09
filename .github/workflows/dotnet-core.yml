@@ -22,7 +22,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore src/PSAsync.sln
+      run: dotnet restore --locked-mode src/PSAsync.sln
     - name: Build
       run: dotnet build --configuration ${BUILD_CONFIGURATION} --no-restore /p:ContinuousIntegrationBuild=true src/PSAsync.sln
     - name: Test
