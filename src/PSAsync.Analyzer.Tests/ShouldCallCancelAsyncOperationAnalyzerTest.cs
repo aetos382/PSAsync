@@ -44,11 +44,15 @@ namespace Hoge
         Cmdlet,
         IAsyncCmdlet
     {
+        // これは偽物
+        public void StopProcessing(int i)
+        {
+        }
     }
 }";
             var expectedResult =
                 new DiagnosticResult(
-                    ShouldCallCancelAsyncOperationsAnalyzer.DiagnosticIds.OverrideStopProcessingAndCallCancelAsyncOperations,
+                    DiagnosticIdentifiers.PSASYNC001,
                     DiagnosticSeverity.Info)
                 .WithLocation(9, 18);
 
@@ -56,7 +60,7 @@ namespace Hoge
         }
 
         [Fact]
-        public async Task IAsyncCmdlet実装クラスにStopProcessingがあるがCancelAsyncOperationsを呼んでいない場合は実装をサジェストする()
+        public async Task IAsyncCmdlet実装クラスでStopProcessingをオーバーライドしているがCancelAsyncOperationsを呼んでいない場合は実装をサジェストする()
         {
             const string source = @"
 using System;
@@ -73,12 +77,18 @@ namespace Hoge
     {
         protected override void StopProcessing()
         {
+            // これは偽物
+            this.CancelAsyncOperations(0);
+        }
+
+        private void CancelAsyncOperations(int i)
+        {
         }
     }
 }";
             var expectedResult =
                 new DiagnosticResult(
-                    ShouldCallCancelAsyncOperationsAnalyzer.DiagnosticIds.CallCancelAsyncOperationsInStopProcessing,
+                    DiagnosticIdentifiers.PSASYNC002,
                     DiagnosticSeverity.Info)
                 .WithLocation(13, 33);
 

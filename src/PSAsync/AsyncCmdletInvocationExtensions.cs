@@ -69,7 +69,7 @@ namespace PSAsync
                 nameof(IAsyncCmdlet.EndProcessingAsync));
         }
 
-        public static void CancelAsyncOperation<TCmdlet>(
+        public static void CancelAsyncOperations<TCmdlet>(
             this TCmdlet cmdlet)
             where TCmdlet :
                 Cmdlet,

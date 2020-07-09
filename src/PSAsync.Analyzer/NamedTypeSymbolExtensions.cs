@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis;
 
 namespace PSAsync.Analyzer
 {
+    // TODO: こいつらのテストも書く
     internal static class NamedTypeSymbolExtensions
     {
         public static string GetFullName(

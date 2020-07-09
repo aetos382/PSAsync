@@ -34,7 +34,7 @@ namespace PSAsync.Samples
         /// <inheritdoc />
         protected override void StopProcessing()
         {
-            this.CancelAsyncOperation();
+            this.CancelAsyncOperations();
         }
 
         #endregion

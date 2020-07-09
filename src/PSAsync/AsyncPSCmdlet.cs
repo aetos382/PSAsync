@@ -33,7 +33,7 @@ namespace PSAsync
         /// <inheritdoc />
         protected override void StopProcessing()
         {
-            this.CancelAsyncOperation();
+            this.CancelAsyncOperations();
         }
 
         [SkipImplementationCheck]
