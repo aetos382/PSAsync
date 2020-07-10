@@ -7,7 +7,7 @@
     <DebugSymbols>true</DebugSymbols>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <EnableSourceLink>$true</EnableSourceLink>
+    <EnableSourceLink>true</EnableSourceLink>
   </PropertyGroup>
 
   <ItemGroup>

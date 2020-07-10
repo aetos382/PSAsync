@@ -9,7 +9,7 @@ on:
 env:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   SOLUTION_FILE: src/PSAsync.sln
-  BUILD_CONFIGURATION: CI
+  SOLUTION_FBUILD_CONFIGURATION: CI
 
 jobs:
   build:
@@ -23,8 +23,8 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore --locked-mode ${SOLUTION_FILE}
+      run: dotnet restore --locked-mode ${SOLUTION_FSOLUTION_FILE}
     - name: Build
-      run: dotnet build --configuration ${BUILD_CONFIGURATION} --no-restore /p:ContinuousIntegrationBuild=true ${SOLUTION_FILE}
+      run: dotnet build --configuration ${SOLUTION_FBUILD_CONFIGURATION} --no-restore /p:ContinuousIntegrationBuild=true ${SOLUTION_FILE}
     - name: Test
-      run: dotnet test --configuration ${BUILD_CONFIGURATION} --no-restore --no-build ${SOLUTION_FILE}
+      run: dotnet test --configuration ${SOLUTION_FBUILD_CONFIGURATION} --no-restore --no-build ${SOLUTION_FILE}

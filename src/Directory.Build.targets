@@ -10,6 +10,9 @@
     </PackageReference>
     <PackageReference Update="Microsoft.VisualStudio.Validation" Version="15.5.31" />
     <PackageReference Update="Microsoft.VisualStudio.Threading" Version="16.6.13" />
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Update="xunit" Version="2.4.1" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2">
@@ -18,16 +21,6 @@
     <PackageReference Update="coverlet.collector" Version="1.3.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(EnableSourceLink)' == 'true'">
-    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(EnableSourceLink)' != 'true'">
-    <PackageReference Remove="Microsoft.SourceLink.*" />
   </ItemGroup>
 
   <ItemGroup>
