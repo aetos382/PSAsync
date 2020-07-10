@@ -49,6 +49,8 @@ public class TestAsyncCommand :
             await this.WriteObjectAsync("Hello, Async World.");
         });
     }
+
+    // ...
 }
 ```
 
