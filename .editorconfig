@@ -24,6 +24,12 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*.md]
+charset = utf-8-bom
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
 [*.yml]
 charset = utf-8
 end_of_line = crlf
@@ -31,7 +37,3 @@ indent_size = 2
 indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
-
-[*.cs]
-dotnet_diagnostic.CA1062.severity = error
-dotnet_code_quality.null_check_validation_method = M:Microsoft.Requires.NotNull``1(``0,System.String)
