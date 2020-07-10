@@ -50,12 +50,16 @@ public class TestAsyncCommand :
         });
     }
 
-    // ...
+    // これを書く必要があります
+    protected override void ProcessRecord()
+    {
+        this.DoProcessRecordAsync();
+    }
 }
 ```
 
 ## 特徴
 
-コマンド クラスは IAsyncCmdlet インターフェイスを実装していればよく、AsyncCmdlet のような基底クラスから派生することを要求しません。
+コマンド クラスは IAsyncCmdlet インターフェイスを実装していればよく、AsyncCmdlet のような基底クラスから派生することを要求しません（一応 AsyncCmdlet / AsyncPSCmdlet は用意していますが、使う必要はありません）。
 
 そのため、クラス設計の自由度が高くなっています。
