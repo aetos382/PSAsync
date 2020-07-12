@@ -32,7 +32,7 @@ jobs:
 
     - name: test
       shell: cmd
-      run: -|
+      run: |
         echo LOCALAPPDATA = %LOCALAPPDATA%
         echo LOCALAPPDATA = ${{ env.LOCALAPPDATA }}
         echo TEST = %TEST%
