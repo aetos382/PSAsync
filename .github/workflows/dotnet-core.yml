@@ -21,7 +21,7 @@ jobs:
 
     steps:
     - name: check shell
-      run: $PSVersionTable
+      run: Get-Process $PID
 
     - name: checkout
       uses: actions/checkout@v2
