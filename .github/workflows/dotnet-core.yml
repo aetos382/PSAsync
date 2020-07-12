@@ -15,7 +15,6 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       SOLUTION_BUILD_CONFIGURATION: CI
-      NUGET_PACKAGES: ${GITHUB_WORKSPACE}/.packages
 
     defaults:
       run:
@@ -31,10 +30,21 @@ jobs:
 
     - name: cache nuget packages
       uses: actions/cache@v2
+      env:
+        cache-prefix: nuget-http-caches-
       with:
-        path: ${env.NUGET_PACKAGES }
-        key: nuget-packages-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: nuget-packages-
+        path: ${{ env.LOCALAPPDATA }}\NuGet\v3-cache
+        key: ${{ env.cache-prefix }}${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: ${{ env.cache-prefix }}
+
+    - name: cache nuget packages
+      uses: actions/cache@v2
+      env:
+        cache-prefix: nuget-globalpackages-
+      with:
+        path: ${{ USERPROFILE }}\.nuget\packages
+        key: ${{ env.cache-prefix }}${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: ${{ env.cache-prefix }}
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
