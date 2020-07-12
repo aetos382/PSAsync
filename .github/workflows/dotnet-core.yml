@@ -15,7 +15,6 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       SOLUTION_BUILD_CONFIGURATION: CI
-      TEST: test
 
     defaults:
       run:
@@ -30,13 +29,13 @@ jobs:
     - name: check environment variables
       run: Get-ChildItem -LiteralPath env:/
 
-    - name: test
-      shell: cmd
-      run: |
-        echo LOCALAPPDATA = %LOCALAPPDATA%
-        echo LOCALAPPDATA = ${{ env.LOCALAPPDATA }}
-        echo TEST = %TEST%
-        echo TEST = ${{ env.TEST }}
+    - uses: actions/github-script@v2
+      id: set-result
+      with:
+        script: return "Hello!"
+
+    - name: Get result
+      run: echo "${{steps.set-result.outputs.result}}"
 
     - name: cache nuget packages
       uses: actions/cache@v2
