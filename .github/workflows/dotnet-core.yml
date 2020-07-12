@@ -29,11 +29,8 @@ jobs:
     # ${{ env.<name> }} では、ワークフロー外で定義されたグローバル環境変数は参照できない
     - name: set environment variables
       run: |
-        echo "::set-env name=NUGET_HTTP_CACHE::${env:LOCALAPPDATA/Nuget/v3-cache}"
-        echo "::set-env name=NUGET_GLOBAL_CACHE::${env:USERPROFILE/.nuget/packages}"
-
-    - name: check environment variables
-      run: Get-ChildItem -LiteralPath env:/
+        echo "::set-env name=NUGET_HTTP_CACHE::${env:LOCALAPPDATA}/Nuget/v3-cache"
+        echo "::set-env name=NUGET_GLOBAL_CACHE::${env:USERPROFILE}/Nuget/v3-cache"
 
     - name: cache nuget packages
       uses: actions/cache@v2
@@ -47,7 +44,7 @@ jobs:
     - name: cache nuget packages
       uses: actions/cache@v2
       env:
-        cache-prefix: nuget-http-caches-
+        cache-prefix: nuget-global-caches-
       with:
         path: ${{ env.NUGET_GLOBAL_CACHE }}
         key: ${{ env.cache-prefix }}${{ hashFiles('**/packages.lock.json') }}
@@ -67,6 +64,3 @@ jobs:
 
     - name: Test
       run: dotnet test --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore --no-build
-
-    - name: check environment variables
-      run: Get-ChildItem -Path env:/
