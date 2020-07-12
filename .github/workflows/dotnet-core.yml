@@ -20,9 +20,6 @@ jobs:
         working-directory: src
 
     steps:
-    - name: check shell
-      run: Get-Process $PID
-
     - name: checkout
       uses: actions/checkout@v2
 
