@@ -17,6 +17,7 @@ jobs:
     
     defaults:
       run:
+        shell: pwsh
         working-directory: src
 
     steps:
@@ -34,6 +35,3 @@ jobs:
 
     - name: Test
       run: dotnet test --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore --no-build
-
-    - name: Check Shell
-      run: $PSVersionTable
