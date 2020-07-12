@@ -29,17 +29,7 @@ jobs:
     # ${{ env.<name> }} では、ワークフロー外で定義されたグローバル環境変数は参照できない
     - name: set environment variables
       run: |
-        echo "::set-env name=NUGET_HTTP_CACHE::${env:LOCALAPPDATA}\Nuget\v3-cache"
         echo "::set-env name=NUGET_GLOBAL_CACHE::${env:USERPROFILE}\.nuget\packages"
-
-    - name: cache nuget packages
-      uses: actions/cache@v2
-      env:
-        cache-prefix: nuget-http-caches-
-      with:
-        path: ${{ env.NUGET_HTTP_CACHE }}
-        key: ${{ env.cache-prefix }}${{ hashFiles('**\packages.lock.json') }}
-        restore-keys: ${{ env.cache-prefix }}
 
     - name: cache nuget packages
       uses: actions/cache@v2
@@ -57,10 +47,13 @@ jobs:
         dotnet-version: 3.1.301
 
     - name: Install dependencies
-      run: dotnet restore --locked-mode --verbosity detailed
+      run: dotnet restore --locked-mode
 
     - name: Build
       run: dotnet build --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore /p:ContinuousIntegrationBuild=true
 
     - name: Test
       run: dotnet test --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore --no-build
+
+    - name: Publish
+      run: dotnet nuget push builtPackages\*.nupkg --api-key ${{ secrets.MYGET_API_KEY }}

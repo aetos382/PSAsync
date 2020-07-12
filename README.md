@@ -1,14 +1,13 @@
 ﻿# PSAsync
 
 [![.NET Core](https://github.com/aetos382/PSAsync/workflows/.NET%20Core/badge.svg?branch=master)](https://github.com/aetos382/PSAsync/actions?query=workflow%3A%22.NET+Core%22)
+[![MyGet](https://img.shields.io/myget/aetos/v/PSAsync)](https://www.myget.org/feed/aetos/package/nuget/PSAsync)
 
 ## 諸注意
 
 本ライブラリは趣味の産物であり、永遠のアルファ版です。破壊的変更もガンガンしますのでご留意ください。
 
 .NET Core 3.1（PowerShell 7）以降専用です。
-
-NuGet パッケージは（まだ）ありません。
 
 ## 概要
 
