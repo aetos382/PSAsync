@@ -57,7 +57,7 @@ jobs:
         dotnet-version: 3.1.301
 
     - name: Install dependencies
-      run: dotnet restore --locked-mode
+      run: dotnet restore --locked-mode --verbosity detailed
 
     - name: Build
       run: dotnet build --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore /p:ContinuousIntegrationBuild=true
