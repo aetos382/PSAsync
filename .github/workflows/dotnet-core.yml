@@ -29,8 +29,8 @@ jobs:
     # ${{ env.<name> }} では、ワークフロー外で定義されたグローバル環境変数は参照できない
     - name: set environment variables
       run: |
-        echo "::set-env NUGET_HTTP_CACHE=${env.LOCALAPPDATA/Nuget/v3-cache}"
-        echo "::set-env NUGET_GLOBAL_CACHE=${env.USERPROFILE/.nuget/packages}"
+        echo "::set-env name=NUGET_HTTP_CACHE::${env.LOCALAPPDATA/Nuget/v3-cache}"
+        echo "::set-env name=NUGET_GLOBAL_CACHE::${env.USERPROFILE/.nuget/packages}"
 
     - name: check environment variables
       run: Get-ChildItem -LiteralPath env:/
