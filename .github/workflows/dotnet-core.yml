@@ -26,6 +26,9 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
 
+    - name: check environment variables
+      run: Get-ChildItem -Path env:\
+
     - name: cache nuget packages
       uses: actions/cache@v2
       with:
@@ -47,3 +50,6 @@ jobs:
 
     - name: Test
       run: dotnet test --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore --no-build
+
+    - name: check environment variables
+      run: Get-ChildItem -Path env:\
