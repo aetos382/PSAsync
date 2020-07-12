@@ -15,8 +15,7 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       SOLUTION_BUILD_CONFIGURATION: CI
-      LOCALAPPDATA: ${{ env.LOCALAPPDATA }}
-      USERPROFILE: ${{ env.USERPROFILE }}
+      TEST: test
 
     defaults:
       run:
@@ -24,11 +23,20 @@ jobs:
         working-directory: src
 
     steps:
+
     - name: checkout
       uses: actions/checkout@v2
 
     - name: check environment variables
       run: Get-ChildItem -LiteralPath env:/
+
+    - name: test
+      shell: cmd
+      run: -|
+        echo LOCALAPPDATA = %LOCALAPPDATA%
+        echo LOCALAPPDATA = ${{ env.LOCALAPPDATA }}
+        echo TEST = %TEST%
+        echo TEST = ${{ env.TEST }}
 
     - name: cache nuget packages
       uses: actions/cache@v2
