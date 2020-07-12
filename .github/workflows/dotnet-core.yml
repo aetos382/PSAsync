@@ -31,8 +31,8 @@ jobs:
       with:
         path: ${NUGET_PACKAGES}
         key: nuget-packages-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys:
-        - nuget-packages-
+        restore-keys: -|
+          nuget-packages-
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
