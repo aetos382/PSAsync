@@ -3,18 +3,20 @@ name: .NET Core
 on:
   push:
     branches: [ master ]
+
   pull_request:
     branches: [ master ]
-
-env:
-  DOTNET_CLI_TELEMETRY_OPTOUT: 1
-  SOLUTION_BUILD_CONFIGURATION: CI
 
 jobs:
   build:
 
     runs-on: windows-latest
-    
+
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      SOLUTION_BUILD_CONFIGURATION: CI
+      NUGET_PACKAGES: .packages
+
     defaults:
       run:
         shell: pwsh
@@ -24,8 +26,19 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
 
+    - name: cache nuget packages
+      uses: actions/cache@v2
+      with:
+        path: ${NUGET_PACKAGES}
+        key: nuget-packages-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys:
+        - nuget-packages-
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
+      with:
+        # setup-dotnet は global.json からバージョン情報を取得できるが、rollForward や allowPrerelease は解釈しないようなので、明示的に指定する。
+        dotnet-version: 3.1.301
 
     - name: Install dependencies
       run: dotnet restore --locked-mode
