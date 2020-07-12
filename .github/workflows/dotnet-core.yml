@@ -15,6 +15,8 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       SOLUTION_BUILD_CONFIGURATION: CI
+      LOCALAPPDATA: ${{ env.LOCALAPPDATA }}
+      USERPROFILE: ${{ env.USERPROFILE }}
 
     defaults:
       run:
@@ -26,23 +28,16 @@ jobs:
       uses: actions/checkout@v2
 
     - name: check environment variables
-      run: Get-ChildItem -Path env:\
+      run: Get-ChildItem -LiteralPath env:/
 
     - name: cache nuget packages
       uses: actions/cache@v2
       env:
         cache-prefix: nuget-http-caches-
       with:
-        path: ${{ env.LOCALAPPDATA }}\NuGet\v3-cache
-        key: ${{ env.cache-prefix }}${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: ${{ env.cache-prefix }}
-
-    - name: cache nuget packages
-      uses: actions/cache@v2
-      env:
-        cache-prefix: nuget-globalpackages-
-      with:
-        path: ${{ env.USERPROFILE }}\.nuget\packages
+        path:
+          - ${{ env.LOCALAPPDATA }}/NuGet/v3-cache
+          - ${{ env.USERPROFILE }}/.nuget/packages
         key: ${{ env.cache-prefix }}${{ hashFiles('**/packages.lock.json') }}
         restore-keys: ${{ env.cache-prefix }}
 
@@ -62,4 +57,4 @@ jobs:
       run: dotnet test --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore --no-build
 
     - name: check environment variables
-      run: Get-ChildItem -Path env:\
+      run: Get-ChildItem -Path env:/
