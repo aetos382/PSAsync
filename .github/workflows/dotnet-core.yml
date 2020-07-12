@@ -15,7 +15,7 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       SOLUTION_BUILD_CONFIGURATION: CI
-      NUGET_PACKAGES: ${{ env.GITHUB_WORKSPACE }}/.packages
+      NUGET_PACKAGES: ${GITHUB_WORKSPACE}/.packages
 
     defaults:
       run:
@@ -32,7 +32,7 @@ jobs:
     - name: cache nuget packages
       uses: actions/cache@v2
       with:
-        path: ${{ env.NUGET_PACKAGES }}
+        path: ${env.NUGET_PACKAGES }
         key: nuget-packages-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: nuget-packages-
 
