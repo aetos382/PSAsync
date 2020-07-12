@@ -42,7 +42,7 @@ jobs:
       env:
         cache-prefix: nuget-globalpackages-
       with:
-        path: ${{ USERPROFILE }}\.nuget\packages
+        path: ${{ env.USERPROFILE }}\.nuget\packages
         key: ${{ env.cache-prefix }}${{ hashFiles('**/packages.lock.json') }}
         restore-keys: ${{ env.cache-prefix }}
 
