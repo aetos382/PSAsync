@@ -26,23 +26,21 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
 
+    # ${{ env.<name> }} では、ワークフロー外で定義されたグローバル環境変数は参照できない
+    - name: set environment variables
+      run: |
+        echo "::set-env NUGET_HTTP_CACHE=${env.LOCALAPPDATA/Nuget/v3-cache}"
+        echo "::set-env NUGET_GLOBAL_CACHE=${env.USERPROFILE/.nuget/packages}"
+
     - name: check environment variables
       run: Get-ChildItem -LiteralPath env:/
-
-    - uses: actions/github-script@v2
-      id: set-result
-      with:
-        script: return "Hello!"
-
-    - name: Get result
-      run: echo "${{steps.set-result.outputs.result}}"
 
     - name: cache nuget packages
       uses: actions/cache@v2
       env:
         cache-prefix: nuget-http-caches-
       with:
-        path: ${{ env.LOCALAPPDATA }}/NuGet/v3-cache
+        path: ${{ env.NUGET_HTTP_CACHE }}
         key: ${{ env.cache-prefix }}${{ hashFiles('**/packages.lock.json') }}
         restore-keys: ${{ env.cache-prefix }}
 
@@ -51,7 +49,7 @@ jobs:
       env:
         cache-prefix: nuget-http-caches-
       with:
-        path: ${{ env.USERPROFILE }}/.nuget/packages
+        path: ${{ env.NUGET_GLOBAL_CACHE }}
         key: ${{ env.cache-prefix }}${{ hashFiles('**/packages.lock.json') }}
         restore-keys: ${{ env.cache-prefix }}
 
