@@ -2,10 +2,11 @@ name: .NET Core
 
 on:
   push:
-    branches: [ master ]
+    branches: '*'
 
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   build:
@@ -23,37 +24,37 @@ jobs:
 
     steps:
 
-    - name: checkout
-      uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
 
-    # ${{ env.<name> }} では、ワークフロー外で定義されたグローバル環境変数は参照できない
-    - name: set environment variables
-      run: |
-        echo "::set-env name=NUGET_GLOBAL_CACHE::${env:USERPROFILE}\.nuget\packages"
+      # ${{ env.<name> }} では、ワークフロー外で定義されたグローバル環境変数は参照できない
+      - name: set environment variables
+        run: |
+          echo "::set-env name=NUGET_GLOBAL_CACHE::${env:USERPROFILE}\.nuget\packages"
 
-    - name: cache nuget packages
-      uses: actions/cache@v2
-      env:
-        cache-prefix: nuget-global-caches-
-      with:
-        path: ${{ env.NUGET_GLOBAL_CACHE }}
-        key: ${{ env.cache-prefix }}${{ hashFiles('**\packages.lock.json') }}
-        restore-keys: ${{ env.cache-prefix }}
+      - name: cache nuget packages
+        uses: actions/cache@v2
+        env:
+          cache-prefix: nuget-global-caches-
+        with:
+          path: ${{ env.NUGET_GLOBAL_CACHE }}
+          key: ${{ env.cache-prefix }}${{ hashFiles('**\packages.lock.json') }}
+          restore-keys: ${{ env.cache-prefix }}
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        # setup-dotnet は global.json からバージョン情報を取得できるが、rollForward や allowPrerelease は解釈しないようなので、明示的に指定する。
-        dotnet-version: 3.1.301
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          # setup-dotnet は global.json からバージョン情報を取得できるが、rollForward や allowPrerelease は解釈しないようなので、明示的に指定する。
+          dotnet-version: 3.1.301
 
-    - name: Install dependencies
-      run: dotnet restore --locked-mode
+      - name: Install dependencies
+        run: dotnet restore --locked-mode
 
-    - name: Build
-      run: dotnet build --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore /p:ContinuousIntegrationBuild=true
+      - name: Build
+        run: dotnet build --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore /p:ContinuousIntegrationBuild=true
 
-    - name: Test
-      run: dotnet test --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore --no-build
+      - name: Test
+        run: dotnet test --configuration ${env:SOLUTION_BUILD_CONFIGURATION} --no-restore --no-build
 
-    - name: Publish
-      run: dotnet nuget push builtPackages\*.nupkg --api-key ${{ secrets.MYGET_API_KEY }}
+      - name: Publish
+        run: dotnet nuget push builtPackages\*.nupkg --api-key ${{ secrets.MYGET_API_KEY }}
